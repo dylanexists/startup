@@ -3,13 +3,7 @@
 
 [My Notes](notes.md)
 
-A brief description of the application here. That was some funny text.
-
-> [!NOTE]
-> This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
-
-> [!NOTE]
-> If you are not familiar with Markdown then you should review the [documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) before continuing.
+RentItBest is a rental management web-app that benefits both tenants and landlords through its dashboard design.
 
 ### Elevator pitch
 
@@ -27,7 +21,7 @@ Once we have a clean, organized, and efficient app for the admins (property mana
 
 ![Design image](CS260_UserDesign.jpg)
 
-While simple for the purposes of this project, a potential tenant can browse the available options for property listings (which admins have created), and if they desire to "buy" the lease they can create an account and login, which for the purposes of the class we will consider signing a contract. They then are brought to a dashboard showing their payment history, information regarding their contract, and options to submit maintenance requests, report issues, etc.
+While simple for the purposes of this project, a potential tenant can browse the available options for property listings, and if they desire to "buy" the lease they can create an account and login, which for the purposes of the class we will consider signing a contract. They then are brought to a dashboard showing their payment history, information regarding their contract, and options to submit maintenance requests, report issues, etc.
 
 
 ```mermaid
@@ -37,9 +31,9 @@ sequenceDiagram
     actor Admin as Admin / Landlord
 
     note over Tenant, Admin: Property & Contract Management
-    Admin->>App: Add Rental Property
-    App-->>Admin: Confirm Property Listed
-    Admin->>App: Post Rental Contract
+    App->>App: Upon Setup, RentItBest Co. talks with Admins to add all rental properties at a fixed rate
+    App-->>Admin: Confirm Properties Listed
+    Admin->>App: Post Rental Contracts
     Tenant->>App: View & Sign Contract
     App-->>Admin: WS Notification: Contract Signed
 
@@ -61,20 +55,23 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Admin (Landlord):
+    - Provide an interactive overview of the properties, allowing for individual property/tenant inspection
+    - Indicators and WS notifications regarding important business actions (rent payments, vacancies, maintenance requests, etc.)
+- User (Tenant):
+    - Ability to view available properties and create an account in order to "purchase and sign" a contract
+    - Provide an interactive user view with tenant actions for paying rent, requesting maintenance, etc.
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Structure for both admin and user dashboards and user login. Contains containers for interactive elements.
+- **CSS** - Application styling that sells the organizational efficiency to rental companies and attracts tenants with its seamless UI.
+- **React** - Dynamic logic such as pop ups, available property listings, or form input fields. 
+- **Service** - Backend service for login, "purchasing" contracts, making payments, creating and resolving different types of requests, and updating property and tenant statuses.
+- **DB/Login** - Store user/admin accounts, properties, contracts, all types of requests, and payments. Access credentials (whether to enter admin flow or tenant flow) stored and delivered upon login.
+- **WebSocket** - Real-time interaction by updating indicators regarding rent and vacancies and by broadcasting business notifications to all admins regarding new requests.
 
 ## 🚀 Specification Deliverable
 
