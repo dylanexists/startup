@@ -28,9 +28,31 @@ Here is an overview of a property of Totally Real Rentals Co., which has interac
 
 ```mermaid
 sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
+    actor Tenant
+    participant App as RentItBest Dashboard App
+    actor Admin as Admin / Landlord
+
+    note over Tenant, Admin: Property & Contract Management
+    Admin->>App: Add Rental Property
+    App-->>Admin: Confirm Property Listed
+    Admin->>App: Post Rental Contract
+    Tenant->>App: View & Sign Contract (or Sell Contract)
+    App-->>Admin: WS Notification: Contract Signed/Transferred
+
+    note over Tenant, Admin: Financial Transactions
+    Admin-->>App: Allow tenant to start paying rent
+    App->>Tenant: Send Rent Due Notification (Due Dat Close)
+    Tenant->>App: Submit Rent Payment
+    App-->>Tenant: Display Payment Confirmation
+    App->>Admin: Disburse Funds & Update Renter's Monthly Info
+
+    note over Tenant, Admin: Maintenance & Tenant Requests
+    Tenant->>App: Submit Maintenance/Lease Transfer/Other Request
+    App->>Admin: WS Business Notification: New Request
+    Admin->>App: Resolve Issue (eg. Book Plumber for Maintenance)
+    App-->>Tenant: WS Dashboard Update: Status Changed (In Progress)
+    Admin->>App: Request Resolved: Status Changed (Resolved)
+    App-->>Tenant: WS Notification: Request Complete (Happy Tenant!)
 ```
 
 ### Key features
