@@ -7,7 +7,7 @@ RentItBest is a rental management web-app that benefits both tenants and landlor
 
 ### Elevator pitch
 
-Isn't it frustrating when your property management company has a poorly managed dashboard app for all its rental properties and employees struggle with managing every tenants and all their needs? Isn't it even worse to be a tenant who has difficulty using the app to pay rent, request maintenance, and, oh boy-- don't even get me started with selling a contract! The solution to both these problems is a uniform dashboard for both tenants and landlords: one app where properties, contracts, and tenant requests are managed and all the needs of a tenant are met. Clean UI combined with interactive dashboards and useful business notifications allows for a rental company to maximize the value of their property while being a breath of fresh air for tenants who find renting from your company to be such a positive and easy experience that they fall in love renting from you!
+Isn't it frustrating when your property management company has a poorly managed dashboard app for all its rental properties and employees struggle with managing every tenants and all their needs? Isn't it even worse to be a tenant who has difficulty using the app to pay rent, request maintenance, and, oh boy-- don't even get me started with selling a contract! The solution to both these problems is a uniform dashboard for both tenants and landlords: one app where properties, contracts, and tenant requests are managed and all the needs of a tenant are met. Clean UI combined with interactive dashboards and useful business notifications allows for a rental company to maximize the value of their properties while being a breath of fresh air for tenants who find renting from your company to be such a positive and easy experience that they fall in love renting from you!
 
 ### Design
 
@@ -24,6 +24,8 @@ Once we have a clean, organized, and efficient app for the admins (property mana
 While simple for the purposes of this project, a potential tenant can browse the available options for property listings, and if they desire to "buy" the lease they can create an account and login, which for the purposes of the class we will consider signing a contract. They then are brought to a dashboard showing their payment history, information regarding their contract, and options to submit maintenance requests, report issues, etc.
 
 ### Sequence Diagram
+
+Below are some examples of the tenant and landlord interactions possible through the app!
 
 ```mermaid
 sequenceDiagram
