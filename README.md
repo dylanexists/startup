@@ -1,4 +1,5 @@
-# Your startup name here
+# RentItBest 
+## The Best Rental Solution for Tenants and Landlords Alike
 
 [My Notes](notes.md)
 
@@ -12,13 +13,18 @@ A brief description of the application here. That was some funny text.
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Isn't it frustrating when your property management company has a poorly managed dashboard app for all its rental properties and employees struggle with managing every tenants and all their needs? Isn't it even worse to be a tenant who has dificulty using the app to pay rent, request maintenance, and, oh boy-- don't even get me started with selling a contract! The solution to both these problems is a uniform dashboard for both tenants and landlords: one app where properties, contracts, and tenant requests are managed and all the needs of a tenant are met. Clean UI combined with interactive dashboards and useful business notifications allows for a rental company to maximize the value of their property while being a breath of fresh air for tenants who find renting from your company to be such a positive and easy experience that they fall in love renting from you!
 
 ### Design
 
+The renting experience becomes a joy only when the rental company is organized and under control:
+
 ![Design image](placeholder.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Here is an overview of a property of Totally Real Rentals Co., which has interactible units that open up a pop-up to view all tenants, their information, any pending requests, and the agreements of their contract. At the bottom lies a variety of indicators regarding important business obligations, such as late rent, maintenance requests, lease transfer requests, etc.
+
+
+
 
 ```mermaid
 sequenceDiagram
