@@ -19,11 +19,15 @@ Isn't it frustrating when your property management company has a poorly managed 
 
 The renting experience becomes a joy only when the rental company is organized and under control:
 
-![Design image](placeholder.png)
+![Design image](CS260_AdminDesign.jpg)
 
-Here is an overview of a property of Totally Real Rentals Co., which has interactible units that open up a pop-up to view all tenants, their information, any pending requests, and the agreements of their contract. At the bottom lies a variety of indicators regarding important business obligations, such as late rent, maintenance requests, lease transfer requests, etc.
+Above is an overview of a property of Totally Real Rentals Co., which has interactible units that open up a pop-up to view all tenants, their information, any pending requests, and the agreements of their contract. At the bottom lies a variety of indicators regarding important business obligations, such as late rent, maintenance requests, lease transfer requests, etc.
 
+Once we have a clean, organized, and efficient app for the admins (property managers), we then turn our focus to an excellent UI for our tenants.
 
+![Design image](CS260_UserDesign.jpg)
+
+While simple for the purposes of this project, a potential tenant can browse the available options for property listings (which admins have created), and if they desire to "buy" the lease they can create an account and login, which for the purposes of the class we will consider signing a contract. They then are brought to a dashboard showing their payment history, information regarding their contract, and options to submit maintenance requests, report issues, etc.
 
 
 ```mermaid
