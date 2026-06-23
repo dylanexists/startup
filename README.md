@@ -7,7 +7,7 @@ RentItBest is a rental management web-app that benefits both tenants and landlor
 
 ### Elevator pitch
 
-Isn't it frustrating when your property management company has a poorly managed dashboard app for all its rental properties and employees struggle with managing every tenants and all their needs? Isn't it even worse to be a tenant who has dificulty using the app to pay rent, request maintenance, and, oh boy-- don't even get me started with selling a contract! The solution to both these problems is a uniform dashboard for both tenants and landlords: one app where properties, contracts, and tenant requests are managed and all the needs of a tenant are met. Clean UI combined with interactive dashboards and useful business notifications allows for a rental company to maximize the value of their property while being a breath of fresh air for tenants who find renting from your company to be such a positive and easy experience that they fall in love renting from you!
+Isn't it frustrating when your property management company has a poorly managed dashboard app for all its rental properties and employees struggle with managing every tenants and all their needs? Isn't it even worse to be a tenant who has difficulty using the app to pay rent, request maintenance, and, oh boy-- don't even get me started with selling a contract! The solution to both these problems is a uniform dashboard for both tenants and landlords: one app where properties, contracts, and tenant requests are managed and all the needs of a tenant are met. Clean UI combined with interactive dashboards and useful business notifications allows for a rental company to maximize the value of their property while being a breath of fresh air for tenants who find renting from your company to be such a positive and easy experience that they fall in love renting from you!
 
 ### Design
 
@@ -15,7 +15,7 @@ The renting experience becomes a joy only when the rental company is organized a
 
 ![Design image](CS260_AdminDesign.jpg)
 
-Above is an overview of a property of Totally Real Rentals Co., which has interactible units that open up a pop-up to view all tenants, their information, any pending requests, and the agreements of their contract. At the bottom lies a variety of indicators regarding important business obligations, such as late rent, maintenance requests, lease transfer requests, etc.
+Above is an overview of a property of Totally Real Rentals Co., which has interactable units that open up a pop-up to view all tenants, their information, any pending requests, and the agreements of their contract. At the bottom lies a variety of indicators regarding important business obligations, such as late rent, maintenance requests, lease transfer requests, etc.
 
 Once we have a clean, organized, and efficient app for the admins (property managers), we then turn our focus to an excellent UI for our tenants.
 
@@ -23,6 +23,7 @@ Once we have a clean, organized, and efficient app for the admins (property mana
 
 While simple for the purposes of this project, a potential tenant can browse the available options for property listings, and if they desire to "buy" the lease they can create an account and login, which for the purposes of the class we will consider signing a contract. They then are brought to a dashboard showing their payment history, information regarding their contract, and options to submit maintenance requests, report issues, etc.
 
+### Sequence Diagram
 
 ```mermaid
 sequenceDiagram
@@ -66,9 +67,9 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Structure for both admin and user dashboards and user login. Contains containers for interactive elements.
+- **HTML** - Structure for both admin and user dashboards and user login page. Contains containers for interactive elements.
 - **CSS** - Application styling that sells the organizational efficiency to rental companies and attracts tenants with its seamless UI.
-- **React** - Dynamic logic such as pop ups, available property listings, or form input fields. 
+- **React** - Dynamic logic such as pop-ups, available property listings, or form input fields. 
 - **Service** - Backend service for login, "purchasing" contracts, making payments, creating and resolving different types of requests, and updating property and tenant statuses.
 - **DB/Login** - Store user/admin accounts, properties, contracts, all types of requests, and payments. Access credentials (whether to enter admin flow or tenant flow) stored and delivered upon login.
 - **WebSocket** - Real-time interaction by updating indicators regarding rent and vacancies and by broadcasting business notifications to all admins regarding new requests.
