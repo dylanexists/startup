@@ -94,9 +94,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Rented EC2 server** - I did not complete this part of the deliverable.
-- [ ] **Leased domain name** - I did not complete this part of the deliverable.
-- [ ] **Server accessible** from my domain: [https://yourdomainnamehere.click](https://yourdomainnamehere.click) - I did not complete this part of the deliverable.
+- [x] **Rented EC2 server** - Got a t3.nano instance.
+- [x] **Leased domain name** - rentitbest.com
+- [x] **Server accessible** from my domain: [https://startup.rentitbest.com](https://startup.rentitbest.com) - Check it out!
 
 ## 🚀 HTML deliverable
 
