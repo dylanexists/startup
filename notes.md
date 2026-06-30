@@ -88,6 +88,36 @@ I can obtain, and renew, a web certificate by enabling the ACME protocol for you
 | **`output`** | Output of input | `<output for="range">0</output>` |
 | **`meter`** | Display value with a known range | `<meter min="0" max="100" value="50"></meter>` |
 
+Because we are not using any CSS for styling we are limited on how visually pleasing our application is. Do not worry about that. At this point we are simply trying to provide structure and content that we will later style and make interactive.
+^^ This is the sentence that helped me really internalize the concept of HTML nodes. I basically need to make my structural "endpoints" and their general locations, knowing I can make it look just how I wish in further steps.
+
+### Pages: (dashes are linked pages)
+
+#### Login (email + password login, view rentals if no account)
+    -View Rentals
+    -User Dashboard
+    -Admin Dashboard
+
+#### View Rentals (list of vacant apartments, requires creating account)
+    -Register
+
+#### Register (create an account with email + password)
+    -User Dashboard
+
+#### User Dashboard (view relevant renter information, submit requests, logout)
+    -Request Form
+    -Login
+
+#### Request Form (submit requests to admins)
+    -User Dashboard
+
+#### Admin Dashboard (see overview of property, inspect apartments/tenants)
+    -Apartment Info
+    -Login
+
+#### Apartment Info (info on apartment and its tenants + requests)
+    -Admin Dashboard
+
 ## React
 
 Interesting things I have learned about React
