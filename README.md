@@ -102,16 +102,16 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **HTML pages** - Five HTML pages that incorporate login and split admin and user flows
+- [x] **Proper HTML element usage** - I researched a lot of different use cases for many elements (header, body, aside, div, form, etc)
+- [x] **Links** - Links accurately carry both users and admins to their respective pages
+- [x] **Text** - Every interactable area has a text description
+- [x] **3rd party API placeholder** - In find-apartment.html, there is a placeholder for a HUDuser API that returns average housing price in Provo
+- [x] **Images** - I added a nice looking image of one of our "properties" from gettyimages (not a real property, this is a school assignment)
+- [x] **Login placeholder** - Login placeholder in index.html
+- [x] **DB data placeholder** - Input boxes and submit button for login. User's "buying" a contract and making request forms are stored
+- [x] **WebSocket placeholder** - In admin-dashboard.html, there is a placeholder for notifications updated live through WebSocket
 
 ## 🚀 CSS deliverable
 
