@@ -110,7 +110,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **3rd party API placeholder** - In find-apartment.html, there is a placeholder for a HUDuser API that returns average housing price in Provo
 - [x] **Images** - I added a nice looking image of one of our "properties" from gettyimages (not a real property, this is a school assignment)
 - [x] **Login placeholder** - Login placeholder in index.html
-- [x] **DB data placeholder** - Input boxes and submit button for login. User's "buying" a contract and making request forms are stored
+- [x] **DB data placeholder** - Input boxes and submit button for login. User's "buying" a contract and making payments are stored
 - [x] **WebSocket placeholder** - In admin-dashboard.html, there is a placeholder for notifications updated live through WebSocket
 
 ## 🚀 CSS deliverable
