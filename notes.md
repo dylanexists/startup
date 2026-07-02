@@ -118,6 +118,19 @@ Because we are not using any CSS for styling we are limited on how visually plea
 #### Apartment Info (info on apartment and its tenants + requests)
     -Admin Dashboard
 
+## CSS
+
+Specificity (precedence)
+The rules for determining which declaration will apply to a specific element also depend the type of declaration. The following defines the general rules of precedence from highest to lowest.
+
+Inline Styles: style="color: black"
+ID Selectors: #myElement { color: blue; }
+Class Selectors, Attribute Selectors, and Pseudo-classes: .myClass { color: green; }
+Element Selectors and Pseudo-elements: p { color: red; }
+Universal Selector (*) and Inherited styles
+
+Bootstrap has been around for longer, is more uniform, and is easier to get started. That being said, Tailwind is less resource-consuming, and has a greater focus on being able to see what your CSS does right on the HTML page, helping developers see the locality of their styling.
+
 ## React
 
 Interesting things I have learned about React
