@@ -31,7 +31,7 @@
                 <h2 class="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
 
                 <p>Note: The average housing cost in Provo is: {API CALL}</p>
-
+<div class="grid-cols-1 lg:grid-cols-3 gap-6 p-6">
                 <div class="grid-container">
                     <div class="card">
                         <h4 class="card-title">Apt. 101</h4>
@@ -45,7 +45,7 @@
                         <button class="card-button">View</button>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" style="background-color: #f2f5f8; border-color: #626364;">
                         <h4 class="card-title">Apt. 102</h4>
                         <div class="card-footer">
                             <p>Stuff about THIS apartment</p>
@@ -58,16 +58,21 @@
                     </div>
                 </div>
             </div>
-
-            <aside style="border: 2px solid black; background-color: #ececec; width: 240px;">
-                <button>&times;</button>
-                <div>
-                    <h2>Become a Tenant</h2>
-                    <h3>Apt. 102</h3>
-                    <a href="register-user.html">Register Account and Buy Contract</a>
-                    <p>By registering an account, you will be purchasing this contract.</p>
+            <aside class="bg-[#ffffff] p-6 rounded shadow-sm border-gray-300 border top-24 lg:col-span-1">
+                <div class="flex w-full bg-[#f1f4f7] rounded mb-4 items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800" alt="Fancy Apartment" width=50% class="m-[10px]">
                 </div>
+                    <h2 class="card-title">Become a Tenant</h2>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Apt. 102</h3>
+                    <span class="card-price">$440/mo</span>
+                    <div class="card-footer">
+                        <a href="register-user.html" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm"
+                            style="color:#ffffff;">
+                            Register Account and Buy Contract</a>
+                        <p>By registering an account, you will be purchasing this contract.</p>
+                    </div>
             </aside>
+</div>
         </main>
         <footer>
             <hr />
