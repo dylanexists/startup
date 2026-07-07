@@ -41,6 +41,11 @@ a {
   justify-content: space-between;
 }
 
+.card-selected {
+    background-color: #f2f5f8; 
+    border-color: #626364;
+}
+
 .card-title {
   font-size: 2.5rem;
   line-height: 2.5rem;
