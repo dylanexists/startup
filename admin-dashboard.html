@@ -21,42 +21,76 @@
                 </menu>
             </nav>
         </header>
-        <div id="notification-container" style="border: 1px solid black">
+        <div id="notification-container" class="bg-red-300 p-4 m-2 text-black border-2 border-red-600">
             <div class="notification-content">
                 <h3>Notification! {WebSocket Placeholder}</h3>
                 <h4>Payment Received</h4>
                 <p>Apt. 301 has paid September rent successfully.</p>
             </div>
         </div>
-        <main>
-            <h1>Admin Dashboard</h1>
+        <main class="flex flex-col items-center min-h-[calc(100vh-4rem)]">
+            <h1 class="text-5xl font-bold tracking-tight text-gray-900">Admin Dashboard</h1>
 
-            <div>
-                <h2>Rental Properties</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 border-2 border-gray-300 rounded p-4">
+        <div class="lg:col-span-2 p-6">
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Rental Properties</h2>
 
-                <div style="border: 2px solid black; padding: 15px; margin-bottom: 15px; width: 80px;">
-                    <h4>Apt. 301</h4>
-                    
-                </div>
+            <div class="grid-cols-1 lg:grid-cols-4 gap-6 p-6">
 
-                <div style="border: 2px solid black; background-color: #ececec; padding: 15px; margin-bottom: 15px; width: 80px;">
-                    <h4>Apt. 201</h4>
+                <div class="grid-container">
+                    <div class="card">
+                        <h4 class="card-title">Apt. 101</h4>                    
+                            <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Apt. 102</h4>                    
+                            <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Apt. 103</h4>                    
+                            <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Apt. 104</h4>                    
+                            <button class="card-button">View</button>
+                    </div>
+                    <div class="card" style="background-color: #f2f5f8; border-color: #626364;">
+                        <h4 class="card-title">Apt. 201</h4>
+                            <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Apt. 202</h4>                    
+                            <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Apt. 203</h4>                    
+                            <button class="card-button">View</button>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Apt. 204</h4>                    
+                            <button class="card-button">View</button>
+                    </div>
                 </div>
             </div>
-            <h3>^ <br> ||</h3>
-            <aside style="border: 2px solid black; background-color: #ececec; width: 200px;">
-                <button>&times;</button>
-                <div>
-                    <h2>Apt. 201</h2>
-                    <h3>Property Details</h3>
-                    This will be a sidebar view
-                    <p style="line-height: 1.5;"> 
-                        Rent: $550/mo<br>
-                        Tenant(s): Dylan and Bailey<br>
-                        This Month's Rent: &#9989; <br>
-                    </p>
+            </div>
+        <aside class="bg-[#ffffff] p-6 rounded shadow-sm border-gray-300 border top-24 lg:col-span-1">
+            <div class="flex w-full bg-[#f1f4f7] rounded mb-4 items-center justify-center">
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800" alt="Fancy Apartment" width=50% class="m-[10px]">
+            </div>
+                <div class="flex justify-between items-center"> 
+                <span class="card-title">Apt. 201</span>
+                <span class="text-xl font-bold text-[#0f417a] mb-2">$440/mo</span>
                 </div>
-            </aside>
+                <span class="flex text-xl font-bold justify-center mb-8">Dylan and Bailey</span>
+                <div class="card-footer" style="font-size:1.25rem;">
+                    <p>Rent paid for July: &#9745;</p>
+                    <p>Requests: 0</p>
+                    <a href="" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm"
+                        style="color:#ffffff;">
+                        View Contract</a>
+                </div>
+        </aside>
+    </div>
         </main>
         <footer>
             <hr />
