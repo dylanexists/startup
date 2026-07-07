@@ -21,21 +21,27 @@
                 </menu>
             </nav>
         </header>
-        <main>
-            <h1>Register User</h1>
-            <p>You are creating an account and purchasing the contract for Apt. 102 with rent of $440/mo!</p>
-            <form method="get">
-                <h4>Register</h4>
-                <div>
-                    <span>Email</span>
-                    <input type="text" placeholder="your@email.com" required/>
-                </div>
-                <div>
-                    <span>Password</span>
-                    <input type="password" placeholder="password" required/>
-                </div>
-                <button type="submit" formaction="user-dashboard.html">Create Account and Buy Contract</button>
-            </form>
+        <main class="flex flex-col justify-center items-center h-screen">
+            <h1 class="text-5xl font-bold tracking-tight text-gray-900">Register User</h1>
+            <section class="p-6 bg-white border border-gray-300 rounded-lg shadow-sm space-y-6 m-4">
+                <p class="text-2xl font-bold tracking-tight text-gray-900 text-wrap text-center">You are creating an account and purchasing the contract </br> for Apt. 102 with rent of $440/mo!</p>
+
+                <form method="get" class="space-y-4">
+                    <h4 class="text-center text-xl font-bold">Register</h4>
+                    <div>
+                        <span class="text-left">Email</span>
+                        <input class="w-full border border-gray-300 rounded px-3 py-2"
+                        type="text" placeholder="your@email.com" required/>
+                    </div>
+                    <div>
+                        <span class="text-left">Password</span>
+                        <input class="w-full border border-gray-300 rounded px-3 py-2"
+                        type="password" placeholder="password" required/>
+                    </div>
+                    <button type="submit" formaction="user-dashboard.html" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm">
+                        Create Account and Buy Contract</button>
+                </form>
+            </section>
         </main>
         <footer>
             <hr />
