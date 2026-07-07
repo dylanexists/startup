@@ -12,3 +12,70 @@ header {
 a {
     color: #0f417a
 }
+
+/*Find Apartment Containers*/
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 2.5rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  padding: 1rem;
+  color: #111827;
+}
+
+.card-footer {
+  flex-direction: column;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-price {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.25rem;
+  color: #0f417a;
+  font-weight: 700;
+  align-self: flex-end;
+}
+
+.card-button {
+  margin-top: 0.5rem;
+  background-color: #0f417a;
+  color: #ffffff;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.card-button:hover {
+  background-color: #0a2f58;
+}
+
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -22,26 +22,43 @@
                 </menu>
             </nav>
         </header>
-        <main>
-            <h1 class="text-5xl font-bold tracking-tight text-gray-900">
+        <main class="flex flex-col items-center pt-16 min-h-[calc(100vh-8.25rem)]">
+            <h1 class="text-5xl font-bold tracking-tight text-gray-900 mb-24">
                 Find an Apartment</h1>
-
-            <div>
-                <h2>Available Listings:</h2>
+            
+            <div class="text-center">
+                
+                <h2 class="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
 
                 <p>Note: The average housing cost in Provo is: {API CALL}</p>
 
-                <div style="border: 2px solid black; padding: 15px; margin-bottom: 15px; width: 80px;">
-                    <h4>Apt. 101</h4>
-                    <p>$425/mo</p>
-                </div>
-
-                <div style="border: 2px solid black; background-color: #ececec; padding: 15px; margin-bottom: 15px; width: 80px;">
-                    <h4>Apt. 102</h4>
-                    <p>$440/mo</p>
+                <div class="grid-container">
+                    <div class="card">
+                        <h4 class="card-title">Apt. 101</h4>
+                        <div class="card-footer">
+                            <p>Some information about the apartment</p>
+                            <p>- 3 roommates </p>
+                            <p>- In-unit washer/dryer </p>
+                            <p>- Dope apartment </p>
+                            <p> That's all</p>
+                        <span class="card-price">$440/mo</span>
+                        <button class="card-button">View</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Apt. 102</h4>
+                        <div class="card-footer">
+                            <p>Stuff about THIS apartment</p>
+                            <p>- 2 roommates </p>
+                            <p>- Free donkey </p>
+                            <p>- Also dope </p>
+                        <span class="card-price">$440/mo</span>
+                        <button class="card-button">View</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <h3>^ <br> ||</h3>
+
             <aside style="border: 2px solid black; background-color: #ececec; width: 240px;">
                 <button>&times;</button>
                 <div>
