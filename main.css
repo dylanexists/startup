@@ -46,7 +46,11 @@ a {
   line-height: 1.25rem;
   font-weight: 700;
   padding: 1rem;
+  gap: 0.5rem;
   color: #111827;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .card-footer {
