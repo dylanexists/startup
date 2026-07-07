@@ -21,17 +21,35 @@
                 </menu>
             </nav>
         </header>
-        <main>
-            <h1>User Dashboard</h1>
-            <h2>Apt. 102 ~ $440/mo</h2>
-            <div>
-                <h3>Payment History</h3>
-                <ul>
-                    <li>July $440 &#9745;</li>
-                    <li>Aug $440 &#9745;</li>
-                    <li>Sep $440 &#9744;</li>
-                </ul>
-                <button>Pay Rent</button>
+
+        <main class="flex flex-col items-center pt-16 min-h-[calc(100vh-8.25rem)]">
+            <h1 class="text-5xl font-bold tracking-tight text-gray-900 mb-24">User Dashboard</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+                <section class="p-6 bg-white border border-gray-300 rounded-lg shadow-sm space-y-6 m-4">
+                    <h3>Payment History</h3>
+                    <ul class="space-y-3">
+                        <li class="p-3 bg-gray-50 border border-gray-200 rounded-md">July $440 &#9745;</li>
+                        <li class="p-3 bg-gray-50 border border-gray-200 rounded-md">Aug $440 &#9745;</li>
+                        <li class="p-3 bg-gray-50 border border-gray-200 rounded-md">Sep $440 &#9744;</li>
+                    </ul>
+                    <button class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm">
+                        Pay Rent</button>
+                </section>
+                <div class="flex flex-col justify-between p-6 bg-white border border-gray-200 rounded shadow-sm md:col-span-2 p-6">
+                    <h2 class="text-2xl font-bold tracking-tight text-gray-900">Apt. 102 </br> $440/mo</h2>
+                    
+                    <div class="flex flex-col gap-2 mt-4">
+                        <a href="" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center"
+                            style="color:#ffffff;">
+                            Submit Maintenance Request</a>
+                        <a href="" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center"
+                            style="color:#ffffff;">
+                            Sell Contract</a>
+                        <a href="" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center"
+                            style="color:#ffffff;">
+                            View Contract</a>
+                    </div>
+                </div>
             </div>
             
         </main>
