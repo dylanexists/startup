@@ -118,12 +118,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Visually appealing colors and layout. No overflowing elements.** - I did not complete this part of the deliverable.
+- [x] **Visually appealing colors and layout. No overflowing elements.** - I added a consistent color scheme and intuitive design.
 - [x] **Use of a CSS framework** - I decided to use the Tailwind framework.
-- [ ] **All visual elements styled using CSS** - I did not complete this part of the deliverable.
+- [x] **All visual elements styled using CSS** - I used CSS everywhere possible.
 - [x] **Responsive to window resizing using flexbox and/or grid display** - I did not complete this part of the deliverable.
-- [ ] **Use of a imported font** - I did not complete this part of the deliverable.
-- [ ] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I did not complete this part of the deliverable.
+- [x] **Use of a imported font** - I imported the Figtree font.
+- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - Implemented CSS for elements, classes, ID (#notification-container), and psuedo selector (button:hover)
 
 ## 🚀 React part 1: Routing deliverable
 

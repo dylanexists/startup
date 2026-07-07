@@ -13,6 +13,16 @@ a {
     color: #0f417a
 }
 
+#notification-container {
+    background-color: #fca5a5;
+    padding: 1rem;
+    margin: 0.5rem;
+    color: #000;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #dc2626;
+}
+
 /*Find Apartment Containers*/
 .grid-container {
   display: grid;
