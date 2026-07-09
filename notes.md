@@ -133,4 +133,6 @@ Bootstrap has been around for longer, is more uniform, and is easier to get star
 
 ## React
 
-Interesting things I have learned about React
+JSX is a hybrid of JavaScript and HTML, allowing for HTML-like code to be created inside of my JavaScript.
+
+Vite handles my JSX development by bundling up files and starting my web server, while updating my browser as I write code.
