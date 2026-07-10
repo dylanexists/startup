@@ -136,3 +136,7 @@ Bootstrap has been around for longer, is more uniform, and is easier to get star
 JSX is a hybrid of JavaScript and HTML, allowing for HTML-like code to be created inside of my JavaScript.
 
 Vite handles my JSX development by bundling up files and starting my web server, while updating my browser as I write code.
+
+Babel converts JSX into valid JavaScript that and, altough it looks complicated, it is perfectly rendered by a browser.
+
+Single-page web apps load all React components upon startup and dynamically refresh the page with the required tree to give the illusion of going through different pages.
