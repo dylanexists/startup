@@ -1,68 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>RentItBest CSS</title>
-        <link href="./dist/output.css" rel="stylesheet"/>
-        <link href="./main.css" rel="stylesheet"/>
-    </head>
-    <body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
 
-        <header class="flex items-center px-8 py-4">
-            <a href="index.html" class="block shrink-0">
-            <img src="free-house-icon.png" alt="Logo" class="h-auto max-h-[50px] w-auto object-contain">
-            </a>
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900">
-                RentItBest</h1>
-            <nav class="ml-auto">
-                <menu class="flex justify-end items-center gap-4">
-                    <li><a href="index.html">Login</a></li>
-                    <li><a href="find-apartment.html">Find an Apartment</a></li>
-                </menu>
-            </nav>
-        </header>
-
-        <main class="flex flex-col justify-center items-center min-h-screen py-12">
-            <h1 class="text-5xl font-bold tracking-tight text-gray-900">
-                Welcome to RentItBest</h1>
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">
-                The Best Rental Solution for Tenants and Landlords Alike</h2>
-            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800" alt="Fancy Apartment" class="max-w-xs m-[10px]">
-            <section class="p-6 bg-white border border-gray-300 rounded-lg shadow-sm space-y-6">
-                <form method="get" class="space-y-4">
-                    <h4 class="text-center text-xl font-bold">Login</h4>
-                    <div>
-                        <span class="text-left">Email</span>
-                        <input class="w-full border border-gray-300 rounded px-3 py-2"
-                        type="text" placeholder="your@email.com" required/>
-                    </div>
-                    <div>
-                        <span class="text-left">Password</span>
-                        <input class="w-full border border-gray-300 rounded px-3 py-2"
-                        type="password" placeholder="password" required/>
-                    </div>
-                    <div  class="text-center">
-                    <button type="submit" formaction="user-dashboard.html" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm">
-                        Login as User</button>
-                    <button type="submit" formaction="admin-dashboard.html" class="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm">
-                        Login as Admin</button>
-                    </div>
-                </form>
-                <div class="text-center">
-                    <h4 class="m-4">Don't have an account/apartment?</h4>
-                    <a href="find-apartment.html" class="bg-[#f2f5f8] hover:bg-[#f5f5f8] font-semibold py-2 px-6 rounded-md shadow-sm"
-                            >Come find an apartment!</a>
-                </div>
-                <br>
-            </section>
-        </main>
-
-        <footer>
-            <hr />
-            <span>© 2026 [Dylan Steenhoek]. This website was created strictly for educational purposes as a school project. All external media, fonts, and images are used under Fair Use for academic evaluation.</span>
-            <br />
-            <a href="https://github.com/dylanexists/startup">GitHub</a>
-        </footer>
-    </body>
+    <title>RentItBest React</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/index.jsx"></script>
+  </body>
 </html>
