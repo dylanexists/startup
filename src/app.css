@@ -6,7 +6,7 @@ html, .body {
 }
 
 header {
-    background-color: #a5adf2;
+    background-color: #a5adf2 !important;
 }
 
 a {
