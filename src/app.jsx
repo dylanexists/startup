@@ -1,6 +1,10 @@
 import React from 'react';
 import './output-r1.css';
 import './app.css';
+import { FindApartment } from './find-apartment/find-apartment';
+import { Login } from './login/login';
+import { RegisterUser } from './register-user/register-user';
+import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 
 export default function App() {
   return (
@@ -14,13 +18,20 @@ export default function App() {
                 RentItBest</h1>
             <nav class="ml-auto">
                 <menu class="flex justify-end items-center gap-4">
-                    <li><a href="index.html">Login</a></li>
-                    <li><a href="find-apartment.html">Find an Apartment</a></li>
+                    <li><NavLink to="">Login</NavLink></li>
+                    <li><NavLink to="find-apartment">Find an Apartment</NavLink></li>
                 </menu>
             </nav>
         </header>
 
-        <main>App will display here</main>
+        <Routes>
+            <Route path='/' element={<Login />} exact />
+            <Route path='/find-apartment' element={<FindApartment />} />
+            <Route path='/register-user' element={<RegisterUser />} />
+            <Route path='/admin-dashboard' element={<AdminDashboard />} />
+            <Route path='/user-dashboard' element={<UserDashboard />} />
+            <Route path='*' element={<NotFound />} />
+        </Routes>
 
         <footer>
             <hr />
@@ -30,4 +41,8 @@ export default function App() {
         </footer>
     </div>
   );
+}
+
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
