@@ -463,7 +463,7 @@
     color: var(--color-gray-900);
   }
   .text-white {
-    color: var(--color-white);
+    color: var(--color-white) !important;
   }
   .underline {
     text-decoration-line: underline;

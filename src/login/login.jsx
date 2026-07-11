@@ -23,10 +23,10 @@ export function Login() {
                         type="password" placeholder="password" required/>
                     </div>
                     <div  className="text-center">
-                    <button type="submit" formaction="user-dashboard.html" className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm m-2">
-                        Login as User</button>
-                    <button type="submit" formaction="admin-dashboard.html" className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm m-2">
-                        Login as Admin</button>
+                    <Link to="/user-dashboard" className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm m-2" >
+                        Login as User</Link>
+                    <Link to="/admin-dashboard" className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm m-2">
+                        Login as Admin</Link>
                     </div>
                 </form>
                 <div className="text-center">

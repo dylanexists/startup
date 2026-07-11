@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function FindApartment() {
   return (
@@ -45,9 +46,8 @@ export function FindApartment() {
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Apt. 102</h3>
                     <span className="card-price">$440/mo</span>
                     <div className="card-footer">
-                        <a href="register-user.html" className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm"
-                            style={{color:'#ffffff'}}>
-                            Register Account and Buy Contract</a>
+                        <Link to="/register-user" className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm">
+                            Register Account and Buy Contract</Link>
                         <p>By registering an account, you will be purchasing this contract.</p>
                     </div>
             </aside>
