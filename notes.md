@@ -142,3 +142,5 @@ Babel converts JSX into valid JavaScript that and, altough it looks complicated,
 Single-page web apps load all React components upon startup and dynamically refresh the page with the required tree to give the illusion of going through different pages.
 
 React hooks allow developers to hook into React state, meaning they can store and act upon values we create in React's internal memory, and trigger these changes/queries upon change of state.
+
+localStorage is useful for storing permanent user data in the browser, but it is vulnerable to XSS attacks and should not be used for sensitive information!
