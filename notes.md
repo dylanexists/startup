@@ -144,3 +144,5 @@ Single-page web apps load all React components upon startup and dynamically refr
 React hooks allow developers to hook into React state, meaning they can store and act upon values we create in React's internal memory, and trigger these changes/queries upon change of state.
 
 localStorage is useful for storing permanent user data in the browser, but it is vulnerable to XSS attacks and should not be used for sensitive information!
+
+There is great power in React.useState() and React.useEffect(). By utilizing React.useState(), I can set up "global" variables and set functions to edit variables according to changes in the state. I can use React.useEffect() to trigger these functions, and I can give a dependency array to decide what variable changes should cause a reload, or give no dependencies so that it only runs once.
