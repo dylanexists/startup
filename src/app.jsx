@@ -7,8 +7,40 @@ import { Login } from './login/login';
 import { RegisterUser } from './register-user/register-user';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { UserDashboard } from './user-dashboard/user-dashboard';
+import { AccountManager } from './login/AccountManager';
+
+const ACCOUNTS_GLOB = {
+        "admin_0": {id: "0", email: "admin@email.com", password: "admin", role: "Admin"},
+        "user_1": {id: "1", email: "user@email.com", password: "user", role: "User"},
+    }
 
 export default function App() {
+  const [accounts, setAccounts] = useState(ACCOUNTS_GLOB)
+  
+  const [currentUser, setCurrentUser] = useState(() => {
+    const saved = localStorage.getItem('currentUser')
+    return saved ? JSON.parse(saved) : null
+  })
+
+  function handleLoginSuccess(user) {
+    setCurrentUser(user)
+    localStorage.setItem('currentUser', JSON.stringify(user))
+  }
+  
+  function handleRegisterSuccess(newUser) {
+    setAccounts(prevAccounts => ({
+        ...prevAcounts,
+        [`user_${newUser.id}`]: newUser,
+    }))
+    handleLoginSuccess(newUser) //auto login on successful registration
+}
+
+  function handleLogout() {
+    setCurrentUser(null)
+    localStorage.removeItem('currentUser')
+  }
+  
+
   return (
     <BrowserRouter>
     <div className="body bg-dark text-light">
@@ -27,7 +59,10 @@ export default function App() {
         </header>
 
         <Routes>
-            <Route path='/' element={<Login />} />
+            <Route path='/' 
+            element={<Login 
+            accounts={accounts}
+            onLoginSuccess={handleLoginSuccess}/>} />
             <Route path='/find-apartment' element={<FindApartment />} />
             <Route path='/register-user' element={<RegisterUser />} />
             <Route path='/admin-dashboard' element={<AdminDashboard />} />
