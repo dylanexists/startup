@@ -7,7 +7,6 @@ import { Login } from './login/login';
 import { RegisterUser } from './register-user/register-user';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { UserDashboard } from './user-dashboard/user-dashboard';
-import { AccountManager } from './login/AccountManager';
 
 const ACCOUNTS_GLOB = {
         "admin_0": {id: "0", email: "admin@email.com", password: "admin", role: "Admin"},
@@ -80,11 +79,13 @@ function AppContent() {
             <Route path='/' 
             element={<Login 
             accounts={accounts}
-            onLoginSuccess={handleLoginSuccess}/>} 
+            onLoginSuccess={handleLoginSuccess}
+            onAutoLogout={handleLogout}/>} 
             />
             <Route path='/find-apartment' element={<FindApartment />} />
             <Route path='/register-user' 
             element={<RegisterUser 
+            accounts={accounts}
             onRegisterSuccess={handleRegisterSuccess}/>} 
             />
             <Route path='/admin-dashboard' element={<AdminDashboard />} />

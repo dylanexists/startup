@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-export function Login({ accounts, onLoginSuccess }) {
+export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    onAutoLogout()
+  }, [])
+
+  function handleSubmit(e) {
     e.preventDefault()
     setError('')
 
@@ -44,7 +48,7 @@ export function Login({ accounts, onLoginSuccess }) {
                     <div>
                         <span className="text-left">Email</span>
                         <input className="w-full border border-gray-300 rounded px-3 py-2"
-                        type="text" 
+                        type="email" 
                         placeholder="your@email.com" 
                         onClick={() => setError('')}
                         onChange={(e) => setEmail(e.target.value)}
