@@ -14,6 +14,33 @@ const ACCOUNTS_GLOB = {
         "user_1": {id: "1", email: "user@email.com", password: "user", role: "User"},
     }
 
+const APARTMENTS_GLOB = {
+    "1": {
+    id: "1",
+    title: "Apt. 101",
+    description: "Some information about the apartment",
+    features: ["3 roommates", "In-unit washer/dryer", "Dope apartment", "That's all"],
+    price: 440,
+    linkedUserId: null,
+  },
+  "2": {
+    id: "2",
+    title: "Apt. 102",
+    description: "Stuff about THIS apartment",
+    features: ["2 roommates", "Free donkey", "Also dope"],
+    price: 440,
+    linkedUserId: null,
+  },
+  "3": {
+    id: "3",
+    title: "Apt. 103",
+    description: "Taken apartment",
+    features: ["d1", "d2", "d3"],
+    price: 440,
+    linkedUserId: "user_1",
+  },
+}
+
 export default function App() {
     return (
         <BrowserRouter>
@@ -24,6 +51,9 @@ export default function App() {
 }
 
 function AppContent() {
+  const  [allApartments, setAllApartments] = useState(APARTMENTS_GLOB)
+  const availableApartments = Object.values(allApartments).filter(apt => !apt.linkedUserId);
+
   const [accounts, setAccounts] = useState(ACCOUNTS_GLOB)
   const navigate = useNavigate()
   
@@ -84,7 +114,10 @@ function AppContent() {
             onLoginSuccess={handleLoginSuccess}
             onAutoLogout={handleLogout}/>} 
             />
-            <Route path='/find-apartment' element={<FindApartment />} />
+            <Route path='/find-apartment' 
+            element={<FindApartment 
+            availableApartments={availableApartments}/>} 
+            />
             <Route path='/register-user' 
             element={<RegisterUser 
             accounts={accounts}

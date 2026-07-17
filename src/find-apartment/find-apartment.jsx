@@ -1,41 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function FindApartment() {
+export function FindApartment({ availableApartments }) {
   return (
     <main className="flex flex-col items-center pt-16 min-h-[calc(100vh-8.25rem)]">
-            <h1 className="text-5xl font-bold tracking-tight text-gray-900 mb-24">
-                Find an Apartment</h1>
+        <h1 className="text-5xl font-bold tracking-tight text-gray-900 mb-24">
+            Find an Apartment</h1>
+        
+        <div className="text-center">
             
-            <div className="text-center">
-                
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
 
-                <p>Note: The average housing cost in Provo is: [API CALL]</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 border-2 border-gray-300 rounded p-4">
-                    <div className="card">
-                        <h4 className="card-title">Apt. 101</h4>
+            <p>Note: The average housing cost in Provo is: [API CALL]</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 border-2 border-gray-300 rounded p-4">
+                
+                    {availableApartments.map((apt) => (
+                    <div 
+                        className="card" 
+                        key={apt.id} 
+                        >
+                        <h4 className="card-title">{apt.title}</h4>
+                        
                         <div className="card-footer">
-                            <p>Some information about the apartment</p>
-                            <p>- 3 roommates </p>
-                            <p>- In-unit washer/dryer </p>
-                            <p>- Dope apartment </p>
-                            <p> That's all</p>
-                        <span className="card-price">$440/mo</span>
-                        <button className="card-button">View</button>
+                            <p>{apt.description}</p>
+                            
+                            {apt.features.map((feature, index) => (
+                            <p key={index}>- {feature}</p>
+                            ))}
+                            
+                            <span className="card-price">${apt.price}/mo</span>
+                            <button className="card-button">View</button>
                         </div>
                     </div>
-                    <div className="card" style={{backgroundColor: '#f2f5f8', borderColor: '#626364' }}>
-                        <h4 className="card-title">Apt. 102</h4>
-                        <div className="card-footer">
-                            <p>Stuff about THIS apartment</p>
-                            <p>- 2 roommates </p>
-                            <p>- Free donkey </p>
-                            <p>- Also dope </p>
-                        <span className="card-price">$440/mo</span>
-                        <button className="card-button">View</button>
-                        </div>
-                    </div>
+                    ))}
+            
                 </div>
             
             <aside className="bg-[#ffffff] p-6 rounded shadow-sm border-gray-300 border top-24 lg:col-span-1">
@@ -52,6 +50,6 @@ export function FindApartment() {
                     </div>
             </aside>
         </div>
-        </main>
+    </main>
   );
 }
