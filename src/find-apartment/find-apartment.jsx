@@ -14,6 +14,15 @@ export function FindApartment({ availableApartments }) {
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
 
             <p>Note: The average housing cost in Provo is: [API CALL]</p>
+
+            {availableApartments.length === 0 ? (
+              // Display this clean placeholder if everything is taken
+              <div className="text-center">
+                  <p className="text-xl font-bold text-gray-900">
+                      All apartments are currently occupied!
+                  </p>
+              </div>
+          ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 border-2 border-gray-300 rounded p-4">
                 
                     {availableApartments.map((apt) => (
@@ -39,6 +48,7 @@ export function FindApartment({ availableApartments }) {
                     ))}
             
                 </div>
+          )}
         {selectedApt && 
             <aside className="bg-[#ffffff] p-6 rounded shadow-sm border-gray-300 border top-24 lg:col-span-1">
                 <button 
@@ -54,7 +64,9 @@ export function FindApartment({ availableApartments }) {
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{selectedApt.title}</h3>
                     <span className="card-price">${selectedApt.price}/mo</span>
                     <div className="card-footer">
-                        <Link to="/register-user" className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm">
+                        <Link to="/register-user"
+                        onClick={() => {localStorage.setItem('pendingApartment', JSON.stringify(selectedApt))}}
+                        className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md transition duration-200 ease-in-out shadow-sm">
                             Register Account and Buy Contract</Link>
                         <p>By registering an account, you will be purchasing this contract.</p>
                     </div>

@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export function RegisterUser({ accounts, onRegisterSuccess }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [apartment, setApartment] = useState(null)
   const navigate = useNavigate()
+  const location = useLocation()
+  
+  useEffect(() => {
+    const pendingApt = localStorage.getItem('pendingApartment')
+
+    if (!pendingApt) {
+        navigate('/find-apartment')
+        return
+    }
+    
+    const parsedApt = JSON.parse(pendingApt)
+    setApartment(parsedApt)
+  }, [navigate])
 
   function handleRegister(e) {
     e.preventDefault()
@@ -15,21 +29,35 @@ export function RegisterUser({ accounts, onRegisterSuccess }) {
         (acnt) => acnt.email.toLowerCase() === email.toLowerCase()
     )
 
+    const newUser = 
+        {id: `user_${Date.now()}`, 
+        email: email, 
+        password: password, 
+        role: "User"}
+
     if (!foundUser) {
-        onRegisterSuccess({id: `user_${Date.now()}`, email: email, password: password, role: "User"})
+        onRegisterSuccess(newUser, apartment)
+        localStorage.removeItem('pendingApartment')
         navigate('/user-dashboard')
     } else {
         setError('An account already exists with this email. Please try a different email.')
     }
   }
 
-
+  if (!apartment) {
+    return (
+      <main className="flex justify-center items-center min-h-screen">
+        <p className="text-xl text-gray-300">Loading your apartment details...</p>
+      </main>
+    );
+  }
 
   return (
     <main className="flex flex-col justify-center items-center min-h-screen py-12">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900">Register User</h1>
             <section className="p-6 bg-white border border-gray-300 rounded-lg shadow-sm space-y-6 m-4">
-                <p className="text-2xl font-bold tracking-tight text-gray-900 text-wrap text-center">You are creating an account and purchasing the contract <br></br> for Apt. 102 with rent of $440/mo!</p>
+                <p className="text-2xl font-bold tracking-tight text-gray-900 text-wrap text-center">
+                    You are creating an account and purchasing the contract <br></br> for {apartment.title || 'N/A'} with rent of ${apartment.price || '0'}/mo!</p>
 
                 <form onSubmit={handleRegister} className="space-y-4">
                     <h4 className="text-center text-xl font-bold">Register</h4>

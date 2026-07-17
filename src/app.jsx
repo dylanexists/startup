@@ -39,6 +39,62 @@ const APARTMENTS_GLOB = {
     price: 440,
     linkedUserId: "user_1",
   },
+  "4": {
+    id: "4",
+    title: "Apt. 104",
+    price: 440,
+    linkedUserId: "user_2",
+  },
+  "5": {
+    id: "5",
+    title: "Apt. 201",
+    price: 460,
+    linkedUserId: "user_3",
+  },
+  "6": {
+    id: "6",
+    title: "Apt. 202",
+    price: 460,
+    linkedUserId: "user_4",
+  },
+  "7": {
+    id: "7",
+    title: "Apt. 203",
+    description: "A third apartment, just as good",
+    features: ["2 roommates", "Widescreen TV", "Lots of storage"],
+    price: 480,
+    linkedUserId: null,
+  },
+  "8": {
+    id: "8",
+    title: "Apt. 204",
+    price: 480,
+    linkedUserId: "user_5",
+  },
+  "9": {
+    id: "9",
+    title: "Apt. 301",
+    price: 500,
+    linkedUserId: "user_6",
+  },
+  "10": {
+    id: "10",
+    title: "Apt. 302",
+    price: 500,
+    linkedUserId: "user_10",
+  },
+  "11": {
+    id: "11",
+    title: "Apt. 303",
+    price: 520,
+    linkedUserId: "user_7",
+  },
+  "12": {
+    id: "12",
+    title: "Apt. 304",
+    price: 520,
+    linkedUserId: "user_8",
+  },
 }
 
 export default function App() {
@@ -67,11 +123,22 @@ function AppContent() {
     localStorage.setItem('currentUser', JSON.stringify(user))
   }
   
-  function handleRegisterSuccess(newUser) {
+  function handleRegisterSuccess(newUser, pruchasedApt) {
+    const accountID = `user_${newUser.id}`
     setAccounts(prevAccounts => ({
         ...prevAccounts,
-        [`user_${newUser.id}`]: newUser,
+        [accountID]: newUser,
     }))
+
+    if (pruchasedApt && pruchasedApt.id) {
+        setAllApartments(prevApartments => ({
+            ...prevApartments,
+            [pruchasedApt.id]: {
+                ...prevApartments[pruchasedApt.id],
+                linkedUserId: accountID
+            }
+        }))
+    }
     handleLoginSuccess(newUser) //auto login on successful registration
 }
 
