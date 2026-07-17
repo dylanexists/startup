@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Link, useNavigate } from 'react-router-dom';
 import './output-r1.css';
 import './app.css';
 import { FindApartment } from './find-apartment/find-apartment';
@@ -15,7 +15,16 @@ const ACCOUNTS_GLOB = {
     }
 
 export default function App() {
+    return (
+        <BrowserRouter>
+            <AppContent />
+        </BrowserRouter>
+    )
+}
+
+function AppContent() {
   const [accounts, setAccounts] = useState(ACCOUNTS_GLOB)
+  const navigate = useNavigate()
   
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem('currentUser')
@@ -38,11 +47,11 @@ export default function App() {
   function handleLogout() {
     setCurrentUser(null)
     localStorage.removeItem('currentUser')
+    navigate('/')
   }
   
 
   return (
-    <BrowserRouter>
     <div className="body bg-dark text-light">
         <header className="flex items-center px-8 py-4">
             <Link to="/" className="block shrink-0">
@@ -53,7 +62,10 @@ export default function App() {
             <nav className="ml-auto">
                 <menu className="flex justify-end items-center gap-4">
                     {currentUser ? (
+                    <>
+                    <li><div className="font-bold">{currentUser.email.split('@')[0]}</div></li>
                     <li><button onClick={handleLogout} className="nav-button">Logout</button></li>
+                    </>
                     ) : (
                     <>
                     <li><NavLink to="/">Login</NavLink></li>
@@ -87,7 +99,6 @@ export default function App() {
             <a href="https://github.com/dylanexists/startup">GitHub</a>
         </footer>
     </div>
-    </BrowserRouter>
   );
 }
 

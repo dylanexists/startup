@@ -459,6 +459,9 @@
   .text-\[\#0f417a\] {
     color: #0f417a;
   }
+  .text-red-600 {
+    color: var(--color-red-600) !important;
+  }
   .text-gray-900 {
     color: var(--color-gray-900);
   }

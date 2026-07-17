@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function RegisterUser() {
+export function RegisterUser({ onRegisterSuccess }) {
   return (
     <main className="flex flex-col justify-center items-center min-h-screen py-12">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900">Register User</h1>
