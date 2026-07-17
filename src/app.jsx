@@ -28,7 +28,7 @@ const APARTMENTS_GLOB = {
     title: "Apt. 102",
     description: "Stuff about THIS apartment",
     features: ["2 roommates", "Free donkey", "Also dope"],
-    price: 440,
+    price: 500,
     linkedUserId: null,
   },
   "3": {
