@@ -7,6 +7,7 @@ import { Login } from './login/login';
 import { RegisterUser } from './register-user/register-user';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { UserDashboard } from './user-dashboard/user-dashboard';
+import ScrollToTop from './ScrollToTop'
 
 const ACCOUNTS_GLOB = {
         "admin_0": {id: "0", email: "admin@email.com", password: "admin", role: "Admin"},
@@ -16,6 +17,7 @@ const ACCOUNTS_GLOB = {
 export default function App() {
     return (
         <BrowserRouter>
+            <ScrollToTop />
             <AppContent />
         </BrowserRouter>
     )
