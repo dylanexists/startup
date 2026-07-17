@@ -9,8 +9,9 @@ header {
     background-color: #a5adf2 !important;
 }
 
-a {
-    color: #0f417a
+a, .nav-button {
+    color: #0f417a;
+    cursor: pointer;
 }
 
 #notification-container {

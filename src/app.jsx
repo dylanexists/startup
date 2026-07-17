@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, Link } from 'react-router-dom';
 import './output-r1.css';
 import './app.css';
@@ -29,7 +29,7 @@ export default function App() {
   
   function handleRegisterSuccess(newUser) {
     setAccounts(prevAccounts => ({
-        ...prevAcounts,
+        ...prevAccounts,
         [`user_${newUser.id}`]: newUser,
     }))
     handleLoginSuccess(newUser) //auto login on successful registration
@@ -52,8 +52,14 @@ export default function App() {
                 RentItBest</h1>
             <nav className="ml-auto">
                 <menu className="flex justify-end items-center gap-4">
+                    {currentUser ? (
+                    <li><button onClick={handleLogout} className="nav-button">Logout</button></li>
+                    ) : (
+                    <>
                     <li><NavLink to="/">Login</NavLink></li>
                     <li><NavLink to="/find-apartment">Find an Apartment</NavLink></li>
+                    </>
+                    )}
                 </menu>
             </nav>
         </header>
@@ -62,9 +68,13 @@ export default function App() {
             <Route path='/' 
             element={<Login 
             accounts={accounts}
-            onLoginSuccess={handleLoginSuccess}/>} />
+            onLoginSuccess={handleLoginSuccess}/>} 
+            />
             <Route path='/find-apartment' element={<FindApartment />} />
-            <Route path='/register-user' element={<RegisterUser />} />
+            <Route path='/register-user' 
+            element={<RegisterUser 
+            onRegisterSuccess={handleRegisterSuccess}/>} 
+            />
             <Route path='/admin-dashboard' element={<AdminDashboard />} />
             <Route path='/user-dashboard' element={<UserDashboard />} />
             <Route path='*' element={<NotFound />} />
