@@ -123,18 +123,216 @@ const APARTMENTS_GLOB = {
 }
 
 const PAYMENTS_GLOB = {
+        // Apt. 103 (Price: 440, History: Months 6, 7)
     "pay_1234": {
         id: "pay_1234",
         linkedApartmentId: "3",
         month: 6,
-        amount: 440,
+        amount: 445,
         paidInFull: true,
     },
     "pay_5678": {
         id: "pay_5678",
         linkedApartmentId: "3",
         month: 7,
+        amount: 445,
+        paidInFull: false,
+    },
+    // Apt. 104 (Price: 440, History: Months 5, 6, 7)
+    "pay_0001": {
+        id: "pay_0001",
+        linkedApartmentId: "4",
+        month: 5,
         amount: 440,
+        paidInFull: true,
+    },
+    "pay_0002": {
+        id: "pay_0002",
+        linkedApartmentId: "4",
+        month: 6,
+        amount: 440,
+        paidInFull: true,
+    },
+    "pay_0003": {
+        id: "pay_0003",
+        linkedApartmentId: "4",
+        month: 7,
+        amount: 440,
+        paidInFull: false,
+    },
+
+    // Apt. 201 (Price: 460, History: Months 6, 7)
+    "pay_0004": {
+        id: "pay_0004",
+        linkedApartmentId: "5",
+        month: 6,
+        amount: 460,
+        paidInFull: true,
+    },
+    "pay_0005": {
+        id: "pay_0005",
+        linkedApartmentId: "5",
+        month: 7,
+        amount: 460,
+        paidInFull: false,
+    },
+
+    // Apt. 202 (Price: 460, History: Months 4, 5, 6, 7)
+    "pay_0006": {
+        id: "pay_0006",
+        linkedApartmentId: "6",
+        month: 4,
+        amount: 460,
+        paidInFull: true,
+    },
+    "pay_0007": {
+        id: "pay_0007",
+        linkedApartmentId: "6",
+        month: 5,
+        amount: 460,
+        paidInFull: true,
+    },
+    "pay_0008": {
+        id: "pay_0008",
+        linkedApartmentId: "6",
+        month: 6,
+        amount: 460,
+        paidInFull: true,
+    },
+    "pay_0009": {
+        id: "pay_0009",
+        linkedApartmentId: "6",
+        month: 7,
+        amount: 460,
+        paidInFull: false,
+    },
+
+    // Apt. 204 (Price: 485, History: Months 3, 4, 5, 6, 7)
+    "pay_0010": {
+        id: "pay_0010",
+        linkedApartmentId: "8",
+        month: 3,
+        amount: 485,
+        paidInFull: true,
+    },
+    "pay_0011": {
+        id: "pay_0011",
+        linkedApartmentId: "8",
+        month: 4,
+        amount: 485,
+        paidInFull: true,
+    },
+    "pay_0012": {
+        id: "pay_0012",
+        linkedApartmentId: "8",
+        month: 5,
+        amount: 485,
+        paidInFull: true,
+    },
+    "pay_0013": {
+        id: "pay_0013",
+        linkedApartmentId: "8",
+        month: 6,
+        amount: 485,
+        paidInFull: true,
+    },
+    "pay_0014": {
+        id: "pay_0014",
+        linkedApartmentId: "8",
+        month: 7,
+        amount: 485,
+        paidInFull: false,
+    },
+
+    // Apt. 301 (Price: 515, History: Months 5, 6, 7)
+    "pay_0015": {
+        id: "pay_0015",
+        linkedApartmentId: "9",
+        month: 5,
+        amount: 515,
+        paidInFull: true,
+    },
+    "pay_0016": {
+        id: "pay_0016",
+        linkedApartmentId: "9",
+        month: 6,
+        amount: 515,
+        paidInFull: true,
+    },
+    "pay_0017": {
+        id: "pay_0017",
+        linkedApartmentId: "9",
+        month: 7,
+        amount: 515,
+        paidInFull: false,
+    },
+
+    // Apt. 302 (Price: 500, History: Months 6, 7)
+    "pay_0018": {
+        id: "pay_0018",
+        linkedApartmentId: "10",
+        month: 6,
+        amount: 500,
+        paidInFull: true,
+    },
+    "pay_0019": {
+        id: "pay_0019",
+        linkedApartmentId: "10",
+        month: 7,
+        amount: 500,
+        paidInFull: false,
+    },
+
+    // Apt. 303 (Price: 525, History: Months 4, 5, 6, 7)
+    "pay_0020": {
+        id: "pay_0020",
+        linkedApartmentId: "11",
+        month: 4,
+        amount: 525,
+        paidInFull: true,
+    },
+    "pay_0021": {
+        id: "pay_0021",
+        linkedApartmentId: "11",
+        month: 5,
+        amount: 525,
+        paidInFull: true,
+    },
+    "pay_0022": {
+        id: "pay_0022",
+        linkedApartmentId: "11",
+        month: 6,
+        amount: 525,
+        paidInFull: true,
+    },
+    "pay_0023": {
+        id: "pay_0023",
+        linkedApartmentId: "11",
+        month: 7,
+        amount: 525,
+        paidInFull: false,
+    },
+
+    // Apt. 304 (Price: 520, History: Months 5, 6, 7)
+    "pay_0024": {
+        id: "pay_0024",
+        linkedApartmentId: "12",
+        month: 5,
+        amount: 520,
+        paidInFull: true,
+    },
+    "pay_0025": {
+        id: "pay_0025",
+        linkedApartmentId: "12",
+        month: 6,
+        amount: 520,
+        paidInFull: true,
+    },
+    "pay_0026": {
+        id: "pay_0026",
+        linkedApartmentId: "12",
+        month: 7,
+        amount: 520,
         paidInFull: false,
     }
 }
