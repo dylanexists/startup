@@ -23,6 +23,8 @@ const APARTMENTS_GLOB = {
     features: ["3 roommates", "In-unit washer/dryer", "Dope apartment", "That's all"],
     price: 440,
     linkedUserId: null,
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "2": {
     id: "2",
@@ -31,32 +33,42 @@ const APARTMENTS_GLOB = {
     features: ["2 roommates", "Free donkey", "Also dope"],
     price: 500,
     linkedUserId: null,
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "3": {
     id: "3",
     title: "Apt. 103",
     description: "Taken apartment",
     features: ["d1", "d2", "d3"],
-    price: 440,
+    price: 445,
     linkedUserId: "user_1",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "4": {
     id: "4",
     title: "Apt. 104",
     price: 440,
     linkedUserId: "user_2",
+    maintenanceRequested: true,
+    technicianSent: false,
   },
   "5": {
     id: "5",
     title: "Apt. 201",
     price: 460,
     linkedUserId: "user_3",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "6": {
     id: "6",
     title: "Apt. 202",
     price: 460,
     linkedUserId: "user_4",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "7": {
     id: "7",
@@ -65,46 +77,65 @@ const APARTMENTS_GLOB = {
     features: ["2 roommates", "Widescreen TV", "Lots of storage"],
     price: 480,
     linkedUserId: null,
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "8": {
     id: "8",
     title: "Apt. 204",
-    price: 480,
+    price: 485,
     linkedUserId: "user_5",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "9": {
     id: "9",
     title: "Apt. 301",
-    price: 500,
+    price: 515,
     linkedUserId: "user_6",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "10": {
     id: "10",
     title: "Apt. 302",
     price: 500,
     linkedUserId: "user_10",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "11": {
     id: "11",
     title: "Apt. 303",
-    price: 520,
+    price: 525,
     linkedUserId: "user_7",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
   "12": {
     id: "12",
     title: "Apt. 304",
     price: 520,
     linkedUserId: "user_8",
+    maintenanceRequested: false,
+    technicianSent: false,
   },
 }
 
 const PAYMENTS_GLOB = {
-    "1": {
-        id: "1",
+    "pay_1234": {
+        id: "pay_1234",
         linkedApartmentId: "3",
         month: 6,
         amount: 440,
         paidInFull: true,
+    },
+    "pay_5678": {
+        id: "pay_5678",
+        linkedApartmentId: "3",
+        month: 7,
+        amount: 440,
+        paidInFull: false,
     }
 }
 
@@ -133,6 +164,36 @@ function AppContent() {
   React.useEffect(() => {
   console.log("Updated Apartments State:", allApartments);
 }, [allApartments]);
+
+  function handlePaymentUpdate(updatedPayment) {
+    setPayments((prevPayments) => ({
+        ...prevPayments,
+        [updatedPayment.id] : updatedPayment
+    }))
+    
+    const savedUserPayments = localStorage.getItem('userPayments')
+    if (savedUserPayments) {
+        const parsedUserPayments = JSON.parse(savedUserPayments)
+        const newPaymentList = parsedUserPayments.map(p =>
+            p.id === updatedPayment.id ? updatedPayment : p
+        )
+        localStorage.setItem('userPayments', JSON.stringify(newPaymentList))
+    }
+  }
+
+  function handleRequestMaintenance(updatedApartment) {
+    updatedApartment.maintenanceRequested = true
+    setAllApartments((prevApartments) => ({
+        ...prevApartments,
+        [updatedApartment.id] : updatedApartment
+    }))
+    
+    const savedUserApartment = localStorage.getItem('userApartment')
+    if (savedUserApartment) {
+        localStorage.setItem('userApartment', JSON.stringify(updatedApartment))
+    }
+    console.log(localStorage.getItem('userApartment'))
+  }
 
   function handleLoginSuccess(user, currentApartments = allApartments) { //have to add currentApartments because React State is weird
     setCurrentUser(user)
@@ -194,11 +255,11 @@ function AppContent() {
     return checkOrAddThisMonthsPayment(aptPayments, userApartment)
   }
 
-  function checkOrAddThisMonthsPayment(payments, apartment) {
-    if (payments.some(payment => payment.month === APP_MONTH)) {
-        return payments
+  function checkOrAddThisMonthsPayment(aptPayments, apartment) {
+    if (aptPayments.some(payment => payment.month === APP_MONTH)) {
+        return aptPayments
     } else {
-        const nextId = (Object.keys(payments).length + 1).toString();
+        const nextId = `pay_${Date.now()}`
         const newPayment = {
             id: nextId,
             linkedApartmentId: apartment.id,
@@ -206,12 +267,11 @@ function AppContent() {
             amount: apartment.price,
             paidInFull: false
         }
-        payments.push(newPayment) //update the array we are returning
         setPayments(prevPayments => ({ //update local storage
             ...prevPayments,
             [nextId]: newPayment,
         }))
-        return payments
+        return [...aptPayments, newPayment]
     }
   }
   
@@ -264,7 +324,9 @@ function AppContent() {
             allPayments={payments}/>} 
             />
             <Route path='/user-dashboard' 
-            element={<UserDashboard />} 
+            element={<UserDashboard 
+            onPaymentUpdate={handlePaymentUpdate}
+            onRequestMaintenance={handleRequestMaintenance}/>} 
             />
             <Route path='*' element={<NotFound />} />
         </Routes>

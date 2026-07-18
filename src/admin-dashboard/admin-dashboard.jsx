@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const getMonthName = (monthNumber) => {
   const months = [
@@ -12,6 +13,19 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments }) {
   const apartmentsArray = Object.values(allApartments || {})
   const [selectedAptId, setSelectedAptId] = useState(null)
   const selectedApartment = selectedAptId ? allApartments[selectedAptId] : null
+  const navigate = useNavigate()
+
+  const [user, setUser] = useState(() => {
+      const saved = localStorage.getItem('currentUser')
+      return saved ? JSON.parse(saved) : null
+    })
+
+  useEffect(() => {
+    if (!user || user.role !== "Admin") {
+        navigate('/')
+        return
+    }
+    }, [user, navigate])
 
   function getAptTenant(userId) {
     const account = allAccounts[userId];
@@ -87,6 +101,21 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments }) {
                                 }
                             </ul>
                         )}
+                        <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
+                            {selectedApartment.maintenanceRequested ? (
+                                <>
+                                    <span className="text-red-600 font-semibold text-sm">&#9888; Maintenance Requested!</span>
+                                    <button 
+                                        //onClick={() => handleSendTechnician(selectedApartment.id)}
+                                        className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-3 rounded-md shadow-sm m-2 cursor-pointer"
+                                    >
+                                        Send Technician
+                                    </button>
+                                </>
+                            ) : (
+                                <span className="text-gray-500 text-sm italic">No Maintenance Requests &#x1F44D;</span>
+                            )}
+                        </div>
                     </section>
                 </div>
                 </>

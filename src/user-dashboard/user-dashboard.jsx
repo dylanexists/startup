@@ -9,7 +9,7 @@ const getMonthName = (monthNumber) => {
   return months[monthNumber - 1] || "Unknown";
 };
 
-export function UserDashboard() {
+export function UserDashboard( { onPaymentUpdate, onRequestMaintenance } ) {
   const navigate = useNavigate()
 
   const [user, setUser] = useState(() => {
@@ -27,7 +27,32 @@ export function UserDashboard() {
     return saved ? JSON.parse(saved) : []
   })
 
-  console.log(userPayments)
+  function handlePayRent() {
+    if (userPayments.length === 0) return
+
+    const lastPaymentIndex = userPayments.length - 1;
+    const lastPayment = userPayments[lastPaymentIndex]
+
+    const updatedPayment = {
+        ...lastPayment,
+        paidInFull: true
+    }
+
+    const updatedPaymentHistory = userPayments.map((p, index) =>
+        index === lastPaymentIndex ? updatedPayment : p
+    )
+    setUserPayments(updatedPaymentHistory)
+    if(onPaymentUpdate) {onPaymentUpdate(updatedPayment)}
+  }
+
+  function handleRequestMaintenance() {
+    const updatedApartment = {
+        ...apartment,
+        maintenanceRequested:true
+    }
+    setApartment(updatedApartment)
+    if(onRequestMaintenance) {onRequestMaintenance(updatedApartment)}
+  }
   
 
   useEffect(() => {
@@ -72,16 +97,26 @@ export function UserDashboard() {
                         userPayments.length > 0 && userPayments[userPayments.length - 1].paidInFull
                             ? "bg-gray-300 text-gray-500 cursor-default"
                             : "bg-[#0f417a] hover:bg-[#0a2f58] text-white cursor-pointer"
-                    }`}>
-                        Pay Rent</button>
+                    }`}
+                    onClick={
+                        userPayments.length > 0 && !userPayments[userPayments.length - 1].paidInFull 
+                        ? handlePayRent 
+                        : undefined
+                    }>
+                        {userPayments.length > 0 && userPayments[userPayments.length - 1].paidInFull 
+                            ? "Rent Paid" 
+                            : "Pay Rent"}
+                        </button>
                 </section>
                 {apartment && 
                 <div className="flex flex-col justify-between p-6 bg-white border border-gray-200 rounded shadow-sm md:col-span-2 p-6">
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900">{apartment.title} <br></br> {apartment.price}/mo</h2>
                     
                     <div className="flex flex-col gap-2 mt-4">
-                        <button className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center">
-                            Submit Maintenance Request</button>
+                        MR: {apartment.maintenanceRequested}
+                        <button className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center"
+                        onClick={handleRequestMaintenance}>
+                            Request Maintenance</button>
                         <button className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center">
                             Sell Contract</button>
                         <button className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center">
