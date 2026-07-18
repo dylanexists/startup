@@ -110,17 +110,35 @@ export function UserDashboard( { onPaymentUpdate, onRequestMaintenance } ) {
                 </section>
                 {apartment && 
                 <div className="flex flex-col justify-between p-6 bg-white border border-gray-200 rounded shadow-sm md:col-span-2 p-6">
-                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">{apartment.title} <br></br> {apartment.price}/mo</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">{apartment.title} <br></br> ${apartment.price}/mo</h2>
                     
                     <div className="flex flex-col gap-2 mt-4">
-                        MR: {apartment.maintenanceRequested}
-                        <button className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center"
-                        onClick={handleRequestMaintenance}>
+                        <p>{apartment.description}</p>
+                        {apartment.features.map((feature, index) => (
+                            <p key={index}>- {feature}</p>
+                            ))}
+                        {apartment.maintenanceRequested ? (
+                            <>
+                            {apartment.technicianSent ? <p className="text-yellow-500">Management has sent you a Technician!</p> : <div></div>}
+                            <button 
+                                disabled={true}
+                                onClick={undefined}
+                                className="bg-gray-300 text-white font-semibold py-2 px-6 rounded shadow-sm text-center cursor-default"
+                            >
+                                Maintenance Has Been Requested</button>
+                            </>
+                            ) : (
+                            <>
+                            <div></div>
+                            <button 
+                                disabled={false}
+                                onClick={handleRequestMaintenance}
+                                className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center cursor-pointer"
+                            >
                             Request Maintenance</button>
-                        <button className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center">
-                            Sell Contract</button>
-                        <button className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded shadow-sm text-center">
-                            View Contract</button>
+                            </>
+                        )}
+                        
                     </div>
                 </div>
                 }

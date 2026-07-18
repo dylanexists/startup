@@ -9,7 +9,7 @@ const getMonthName = (monthNumber) => {
   return months[monthNumber - 1] || "Unknown";
 };
 
-export function AdminDashboard({ allApartments, allAccounts, allPayments }) {
+export function AdminDashboard({ allApartments, allAccounts, allPayments, onSendTechnician }) {
   const apartmentsArray = Object.values(allApartments || {})
   const [selectedAptId, setSelectedAptId] = useState(null)
   const selectedApartment = selectedAptId ? allApartments[selectedAptId] : null
@@ -33,6 +33,14 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments }) {
     return account ? account.email : 'Placeholder Tenant';
   }
 
+  function handleSendTechnician() {
+    const updatedApartment = {
+        ...selectedApartment,
+        technicianSent:true
+    }
+    if(onSendTechnician) {onSendTechnician(updatedApartment)}
+  }
+
   return (
     <main className="flex flex-col items-center min-h-[calc(100vh-4rem)]">
             <h1 className="text-5xl font-bold tracking-tight text-gray-900">Admin Dashboard</h1>
@@ -54,6 +62,16 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments }) {
                                     <h4 className="card-title">{apt.title}</h4>     
                                     {isVacant && (
                                         <span className="text-red-600 text-xl font-bold">
+                                            &#128721;
+                                        </span>
+                                    )} 
+                                    {apt.maintenanceRequested && !apt.technicianSent && (
+                                        <span className="text-red-300 text-xl font-bold">
+                                            &#9888;
+                                        </span>
+                                    )} 
+                                    {apt.maintenanceRequested && apt.technicianSent && (
+                                        <span className="text-yellow-500 text-xl font-bold">
                                             &#9888;
                                         </span>
                                     )} 
@@ -104,13 +122,29 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments }) {
                         <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
                             {selectedApartment.maintenanceRequested ? (
                                 <>
-                                    <span className="text-red-600 font-semibold text-sm">&#9888; Maintenance Requested!</span>
-                                    <button 
-                                        //onClick={() => handleSendTechnician(selectedApartment.id)}
-                                        className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-3 rounded-md shadow-sm m-2 cursor-pointer"
-                                    >
-                                        Send Technician
-                                    </button>
+                                {selectedApartment.technicianSent ? (
+                                    <>
+                                        <span className="text-yellow-500 font-semibold text-sm">&#9888; Maintenance In Progress..</span>
+                                        <button 
+                                            disabled={true}
+                                            onClick={undefined}
+                                            className="bg-gray-300 text-white font-semibold py-2 px-3 rounded-md shadow-sm m-2 cursor-default"
+                                        >
+                                            Technician Sent
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="text-red-300 font-semibold text-sm">&#9888; Maintenance Requested!</span>
+                                        <button 
+                                            disabled={false}
+                                            onClick={handleSendTechnician}
+                                            className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-3 rounded-md shadow-sm m-2 cursor-pointer"
+                                        >
+                                            Send Technician
+                                        </button>
+                                    </>
+                                )}
                                 </>
                             ) : (
                                 <span className="text-gray-500 text-sm italic">No Maintenance Requests &#x1F44D;</span>
@@ -122,7 +156,7 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments }) {
             ) : (
                 <>
                 <div className="justify-center mb-8">
-                    <span className="flex text-xl font-bold text-red-600 justify-center mb-8">Vacant &#9888;</span>
+                    <span className="flex text-xl font-bold text-red-600 justify-center mb-8">Vacant &#128721;</span>
                     <div className="card-footer align-center">
                         <p>This apartment is listed in Find Apartments.</p>
                         <p>Let's hope someone purchases it soon!</p>

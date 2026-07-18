@@ -182,7 +182,6 @@ function AppContent() {
   }
 
   function handleRequestMaintenance(updatedApartment) {
-    updatedApartment.maintenanceRequested = true
     setAllApartments((prevApartments) => ({
         ...prevApartments,
         [updatedApartment.id] : updatedApartment
@@ -193,6 +192,13 @@ function AppContent() {
         localStorage.setItem('userApartment', JSON.stringify(updatedApartment))
     }
     console.log(localStorage.getItem('userApartment'))
+  }
+
+  function handleSendTechnician(updatedApartment) {
+    setAllApartments((prevApartments) => ({
+        ...prevApartments,
+        [updatedApartment.id] : updatedApartment
+    }))
   }
 
   function handleLoginSuccess(user, currentApartments = allApartments) { //have to add currentApartments because React State is weird
@@ -321,7 +327,8 @@ function AppContent() {
             element={<AdminDashboard 
             allApartments={allApartments}
             allAccounts={accounts}
-            allPayments={payments}/>} 
+            allPayments={payments}
+            onSendTechnician={handleSendTechnician}/>} 
             />
             <Route path='/user-dashboard' 
             element={<UserDashboard 
