@@ -29,8 +29,8 @@ const APARTMENTS_GLOB = {
   "3": {
     id: "3",
     title: "Apt. 103",
-    description: "Taken apartment",
-    features: ["d1", "d2", "d3"],
+    description: "Currently filled apartment",
+    features: ["Beautiful wallpaper", "Office space", "Comes with a shark tank"],
     price: 445,
     linkedUserId: "user_1",
     maintenanceRequested: false,
