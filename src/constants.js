@@ -1,11 +1,11 @@
 export const APP_MONTH = 7
 
-const ACCOUNTS_GLOB = {
+export const ACCOUNTS_GLOB = {
         "admin_0": {id: "0", email: "admin@email.com", password: "admin", role: "Admin"},
         "user_1": {id: "user_1", email: "user@email.com", password: "user", role: "User"},
     }
 
-const APARTMENTS_GLOB = {
+export const APARTMENTS_GLOB = {
     "1": {
     id: "1",
     title: "Apt. 101",
@@ -112,7 +112,7 @@ const APARTMENTS_GLOB = {
   },
 }
 
-const PAYMENTS_GLOB = {
+export const PAYMENTS_GLOB = {
         // Apt. 103 (Price: 440, History: Months 6, 7)
     "pay_1234": {
         id: "pay_1234",
