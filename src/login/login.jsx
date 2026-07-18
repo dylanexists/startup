@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import AdminNote from './AdminNote'
 
 export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
   const [email, setEmail] = useState('')
@@ -33,6 +34,9 @@ export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">
                 The Best Rental Solution for Tenants and Landlords Alike</h2>
             <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800" alt="Fancy Apartment" className="max-w-xs m-[10px]"></img>
+            
+            <AdminNote />
+            
             <section className="p-6 bg-white border border-gray-300 rounded-lg shadow-sm space-y-6">
                 
                 <form onSubmit={handleSubmit} className="space-y-4">

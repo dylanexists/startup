@@ -258,7 +258,10 @@ function AppContent() {
             onRegisterSuccess={handleRegisterSuccess}/>} 
             />
             <Route path='/admin-dashboard' 
-            element={<AdminDashboard />} 
+            element={<AdminDashboard 
+            allApartments={allApartments}
+            allAccounts={accounts}
+            allPayments={payments}/>} 
             />
             <Route path='/user-dashboard' 
             element={<UserDashboard />} 
