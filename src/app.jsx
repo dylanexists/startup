@@ -7,11 +7,12 @@ import { Login } from './login/login';
 import { RegisterUser } from './register-user/register-user';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { UserDashboard } from './user-dashboard/user-dashboard';
-import ScrollToTop from './ScrollToTop'
+import ScrollToTop from './ScrollToTop';
+import { APP_MONTH } from './constants';
 
 const ACCOUNTS_GLOB = {
         "admin_0": {id: "0", email: "admin@email.com", password: "admin", role: "Admin"},
-        "user_1": {id: "1", email: "user@email.com", password: "user", role: "User"},
+        "user_1": {id: "user_1", email: "user@email.com", password: "user", role: "User"},
     }
 
 const APARTMENTS_GLOB = {
@@ -97,6 +98,16 @@ const APARTMENTS_GLOB = {
   },
 }
 
+const PAYMENTS_GLOB = {
+    "1": {
+        id: "1",
+        linkedApartmentId: "3",
+        month: 6,
+        amount: 440,
+        paidInFull: true,
+    }
+}
+
 export default function App() {
     return (
         <BrowserRouter>
@@ -110,6 +121,7 @@ function AppContent() {
   const  [allApartments, setAllApartments] = useState(APARTMENTS_GLOB)
   const availableApartments = Object.values(allApartments).filter(apt => !apt.linkedUserId);
 
+  const [payments, setPayments] = useState(PAYMENTS_GLOB)
   const [accounts, setAccounts] = useState(ACCOUNTS_GLOB)
   const navigate = useNavigate()
   
@@ -118,34 +130,89 @@ function AppContent() {
     return saved ? JSON.parse(saved) : null
   })
 
-  function handleLoginSuccess(user) {
+  React.useEffect(() => {
+  console.log("Updated Apartments State:", allApartments);
+}, [allApartments]);
+
+  function handleLoginSuccess(user, currentApartments = allApartments) { //have to add currentApartments because React State is weird
     setCurrentUser(user)
     localStorage.setItem('currentUser', JSON.stringify(user))
+    if (user.role === 'Admin') {
+            navigate('/admin-dashboard')
+        } else {
+            const userApartment = Object.values(currentApartments).find(
+                (apt) => apt.linkedUserId === user.id)
+            if (userApartment) {
+                localStorage.setItem('userApartment', JSON.stringify(userApartment))
+                const userPayments = getPaymentsByUserId(user.id, currentApartments)
+                localStorage.setItem('userPayments', JSON.stringify(userPayments))
+                navigate('/user-dashboard')
+            } else {
+                console.log("Error finding user's apartment!")
+                return
+            }
+        }
   }
   
-  function handleRegisterSuccess(newUser, pruchasedApt) {
-    const accountID = `user_${newUser.id}`
+  function handleRegisterSuccess(newUser, purchasedApt) {
+    const accountID = newUser.id
     setAccounts(prevAccounts => ({
         ...prevAccounts,
         [accountID]: newUser,
     }))
 
-    if (pruchasedApt && pruchasedApt.id) {
-        setAllApartments(prevApartments => ({
-            ...prevApartments,
-            [pruchasedApt.id]: {
-                ...prevApartments[pruchasedApt.id],
-                linkedUserId: accountID
-            }
-        }))
+    const nextApartmentsState = {
+        ...allApartments,
+        [purchasedApt.id]: {
+            ...allApartments[purchasedApt.id],
+            linkedUserId: accountID
+        }
     }
-    handleLoginSuccess(newUser) //auto login on successful registration
+    setAllApartments(nextApartmentsState)
+
+    handleLoginSuccess(newUser, nextApartmentsState) //auto login on successful registration
 }
 
   function handleLogout() {
     setCurrentUser(null)
     localStorage.removeItem('currentUser')
+    localStorage.removeItem('userApartment')
+    localStorage.removeItem('userPayments')
     navigate('/')
+  }
+
+  function getPaymentsByUserId(userId, currentApartments = allApartments) {
+    const userApartment = Object.values(currentApartments).find(
+        apt => apt.linkedUserId === userId
+    )
+    if (!userApartment) return []
+
+    const aptPayments = Object.values(payments).filter(
+        payment => payment.linkedApartmentId === userApartment.id
+    )
+
+    return checkOrAddThisMonthsPayment(aptPayments, userApartment)
+  }
+
+  function checkOrAddThisMonthsPayment(payments, apartment) {
+    if (payments.some(payment => payment.month === APP_MONTH)) {
+        return payments
+    } else {
+        const nextId = (Object.keys(payments).length + 1).toString();
+        const newPayment = {
+            id: nextId,
+            linkedApartmentId: apartment.id,
+            month: APP_MONTH,
+            amount: apartment.price,
+            paidInFull: false
+        }
+        payments.push(newPayment) //update the array we are returning
+        setPayments(prevPayments => ({ //update local storage
+            ...prevPayments,
+            [nextId]: newPayment,
+        }))
+        return payments
+    }
   }
   
 
@@ -190,8 +257,12 @@ function AppContent() {
             accounts={accounts}
             onRegisterSuccess={handleRegisterSuccess}/>} 
             />
-            <Route path='/admin-dashboard' element={<AdminDashboard />} />
-            <Route path='/user-dashboard' element={<UserDashboard />} />
+            <Route path='/admin-dashboard' 
+            element={<AdminDashboard />} 
+            />
+            <Route path='/user-dashboard' 
+            element={<UserDashboard />} 
+            />
             <Route path='*' element={<NotFound />} />
         </Routes>
 

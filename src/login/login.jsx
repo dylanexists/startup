@@ -21,11 +21,6 @@ export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
 
     if (foundUser) {
         onLoginSuccess(foundUser)
-        if (foundUser.role === 'Admin') {
-            navigate('/admin-dashboard')
-        } else {
-            navigate('/user-dashboard')
-        }
     } else {
         setError('Invalid email or password')
     }
