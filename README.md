@@ -138,9 +138,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **All functionality implemented or mocked out** - I feel I went above and beyond to implement all functionality for both users and admins, and have many features of interactability between their workflows.
+- [x] **Hooks** - I used useState to maintain data across the app and useEffect to triggle hot-reloads, redirect from unauthorized pages, and update data.
 
 ## 🚀 Service deliverable
 
