@@ -36,7 +36,7 @@ export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
             <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800" alt="Fancy Apartment" className="max-w-xs m-[10px]"></img>
             
             <AdminNote />
-            
+
             <section className="p-6 bg-white border border-gray-300 rounded-lg shadow-sm space-y-6">
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -72,7 +72,7 @@ export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
                 <div className="text-center">
                     <h4 className="m-4">Don't have an account/apartment?</h4>
                     <Link to="/find-apartment" className="bg-[#f2f5f8] hover:bg-[#f5f5f8] font-semibold py-2 px-6 rounded-md shadow-sm"
-                            >Come find an apartment!</Link>
+                            >Find an apartment and Register!</Link>
                 </div>
                 <br></br>
             </section>
