@@ -146,3 +146,21 @@ React hooks allow developers to hook into React state, meaning they can store an
 localStorage is useful for storing permanent user data in the browser, but it is vulnerable to XSS attacks and should not be used for sensitive information!
 
 There is great power in React.useState() and React.useEffect(). By utilizing React.useState(), I can set up "global" variables and set functions to edit variables according to changes in the state. I can use React.useEffect() to trigger these functions, and I can give a dependency array to decide what variable changes should cause a reload, or give no dependencies so that it only runs once.
+
+## HTTP Service
+
+Endpoint services I will need to create:
+
+1. CreateUser for newUser
+2. CreateAuth for User
+3. GetAuth/User for existingUser
+4. DeleteAuth to logout User
+5. verifyAuth as middleware verification
+6. getEmptyApartments for Find Apartment Dash
+7. getApartment for User
+8. updateApartment for User / Admin
+9. getPayments for User
+10. addPayment for Admin/Server
+11. updatePayment for User
+12. getAllApartments for Admin
+13. getAllPayments for Admin
