@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+const HUD_TOKEN = import.meta.env.VITE_HUD_API_TOKEN
+
+
 export function FindApartment({ availableApartments }) {
   const [selectedApt, setSelectedApt] = useState(null)
   const [rentalData, setRentalData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const HUD_TOKEN = import.meta.env.VITE_HUD_API_TOKEN
   const UTAH_COUNTY_ID = "4904999999"
 
   useEffect(() => {
