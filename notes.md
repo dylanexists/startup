@@ -151,16 +151,16 @@ There is great power in React.useState() and React.useEffect(). By utilizing Rea
 
 Endpoint services I will need to create:
 
-1. CreateUser for newUser
-2. CreateAuth for User
-3. GetAuth/User for existingUser
-4. DeleteAuth to logout User
-5. verifyAuth as middleware verification
-6. getEmptyApartments for Find Apartment Dash
-7. getApartment for User
+1. CreateUser for newUser [x]
+2. CreateAuth for User [x]
+3. GetAuth/User for existingUser [x]
+4. DeleteAuth to logout User [x]
+5. verifyAuth as middleware verification [x]
+6. getEmptyApartments for Find Apartment Dash [x]
+7. getApartment for User [x]
 8. updateApartment for User / Admin
-9. getPayments for User
+9. getPayments for User [x]
 10. addPayment for Admin/Server
 11. updatePayment for User
-12. getAllApartments for Admin
+12. getAllApartments for Admin [x]
 13. getAllPayments for Admin

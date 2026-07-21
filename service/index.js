@@ -9,7 +9,7 @@ const authCookieName = "token"
 const adminRole = "Admin"
 
 let users = ACCOUNTS_GLOB
-let apartments = APARTMENTS_GLOB
+const apartments = APARTMENTS_GLOB
 let payments = PAYMENTS_GLOB
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -99,6 +99,36 @@ apiRouter.get('/apartments/all', verifyAdminAuth, (req, res) => {
   res.send(apartments);
 });
 
+apiRouter.patch('/apartments/id/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), (req, res) => {
+  try {
+    const { apartmentid } = req.params;
+    const updates = req.body;
+
+    // Update the map record using your helper
+    const updatedApartment = updateApartment(apartmentid, updates);
+
+    if (!updatedApartment) {
+      return res.status(404).json({ error: `Apartment ${apartmentid} not found` });
+    }
+
+    res.status(200).json(updatedApartment);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+function updateApartment(id, updates) {
+  if (!apartments[id]) return null;
+
+  // Merge existing fields with new updates, preserving the original id
+  apartments[id] = {
+    ...apartments[id],
+    ...updates,
+    id: apartments[id].id // Prevent accidental overwriting of the primary ID
+  };
+
+  return apartments[id];
+}
 //--------- Payment Services ---------//
 
 
