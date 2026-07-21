@@ -6,6 +6,7 @@ const { ACCOUNTS_GLOB, APARTMENTS_GLOB, PAYMENTS_GLOB } = require('../src/consta
 const app = express();
 
 const authCookieName = "token"
+const adminRole = "Admin"
 
 let users = ACCOUNTS_GLOB
 let apartments = APARTMENTS_GLOB
@@ -33,6 +34,16 @@ app.use(`/api`, apiRouter);
 const verifyAuth = async (req, res, next) => {
   const user = await findUserByToken(req.cookies[authCookieName]);
   if (user) {
+    next();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+};
+
+// Verify admin authentication
+const verifyAdminAuth = async (req, res, next) => {
+  const user = await findUserByToken(req.cookies[authCookieName]);
+  if (user && user.role === adminRole) {
     next();
   } else {
     res.status(401).send({ msg: 'Unauthorized' });
@@ -76,13 +87,17 @@ apiRouter.get('/apartments/available', (req, res) => {
 });
 
 // GetApartment for User
-apiRouter.get('/apartments/:userid', verifySpecificUserAuth("params", "userid"), (req, res) => {
+apiRouter.get('/apartments/user/:userid', verifySpecificUserAuth("params", "userid"), (req, res) => {
   const { userid } = req.params
   const userApartment = Object.values(apartments).find(
     (apt) => apt.linkedUserId === userid)
   res.send(userApartment);
 });
 
+// GetApartments for Admin
+apiRouter.get('/apartments/all', verifyAdminAuth, (req, res) => {
+  res.send(apartments);
+});
 
 //--------- Payment Services ---------//
 
