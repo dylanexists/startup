@@ -63,7 +63,7 @@ export function FindApartment({ availableApartments }) {
         
         <div className="text-center">
             
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-8">Available Listings:</h2>
             
             {loading ? (
                 <h3 className="text-xl font-normal tracking-tight text-gray-900">Loading HUD.gov housing data...</h3>
