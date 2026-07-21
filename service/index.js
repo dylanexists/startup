@@ -26,6 +26,9 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 
+//--------- Verification Middleware ---------//
+
+
 // Verify user authentication
 const verifyAuth = async (req, res, next) => {
   const user = await findUserByToken(req.cookies[authCookieName]);
@@ -37,14 +40,23 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // Verify Specific user authentication (or admin fetching user data)
-const verifySpecificUserAuth = (paramSource = "params", paramKey = "userid") => {
+const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
     return async (req, res, next) => {
         const user = await findUserByToken(req.cookies[authCookieName]);
         if (!user) {
             return res.status(401).send({ msg: 'Unauthorized!' });
         } 
 
-        const targetUserId = req[paramSource]?.[paramKey];
+        const paramValue = req[paramSource]?.[paramKey];
+        let targetUserId = paramValue
+
+        if (paramKey === 'apartmentid') {
+            const apartment = apartments[paramValue];
+            if (!apartment) {
+                return res.status(404).send({ msg: 'Apartment not found' });
+            }
+            targetUserId = apartment.linkedUserId;
+        }
 
         if (user.id !== targetUserId && user.role !== 'Admin') {
             return res.status(403).send({ msg: 'Forbidden: Access denied' });
@@ -53,7 +65,9 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey = "userid") => 
     }
 }
 
-//--------- User Services ---------//
+
+//--------- Apartment Services ---------//
+
 
 // GetAvailableApartments for Find Apartments Dash
 apiRouter.get('/apartments/available', (req, res) => {
@@ -68,6 +82,22 @@ apiRouter.get('/apartments/:userid', verifySpecificUserAuth("params", "userid"),
     (apt) => apt.linkedUserId === userid)
   res.send(userApartment);
 });
+
+
+//--------- Payment Services ---------//
+
+
+//GetPayments for User
+apiRouter.get('/payments/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), (req, res) => {
+  const { apartmentid } = req.params
+  const userPayments = Object.values(payments).filter(
+    (apt) => apt.linkedApartmentId === apartmentid)
+  res.send(userPayments);
+});
+
+
+//--------- Account Services ---------//
+
 
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
