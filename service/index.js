@@ -69,6 +69,19 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
             targetUserId = apartment.linkedUserId;
         }
 
+        if (paramKey === 'paymentid') {
+            const payment = payments[paramValue];
+            if (!payment) {
+                return res.status(404).send({ msg: 'Payment not found' });
+            }
+            const targetAptId = payment.linkedApartmentId
+            const apartment = apartments[targetAptId];
+            if (!apartment) {
+                return res.status(404).send({ msg: 'Apartment from payment not found' });
+            }
+            targetUserId = apartment.linkedUserId;
+        }
+
         if (user.id !== targetUserId && user.role !== 'Admin') {
             return res.status(403).send({ msg: 'Forbidden: Access denied' });
         }
@@ -99,12 +112,12 @@ apiRouter.get('/apartments/all', verifyAdminAuth, (req, res) => {
   res.send(apartments);
 });
 
+// updateApartment for User
 apiRouter.patch('/apartments/id/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), (req, res) => {
   try {
     const { apartmentid } = req.params;
     const updates = req.body;
 
-    // Update the map record using your helper
     const updatedApartment = updateApartment(apartmentid, updates);
 
     if (!updatedApartment) {
@@ -120,7 +133,6 @@ apiRouter.patch('/apartments/id/:apartmentid', verifySpecificUserAuth("params", 
 function updateApartment(id, updates) {
   if (!apartments[id]) return null;
 
-  // Merge existing fields with new updates, preserving the original id
   apartments[id] = {
     ...apartments[id],
     ...updates,
@@ -160,6 +172,36 @@ apiRouter.post('/payments/bulk', verifyAdminAuth, (req, res) => {
 
   res.status(200).send({ previousCount: prevCount, updatedCount: updatedCount });
 });
+
+// updatePayment for User
+apiRouter.patch('/payments/id/:paymentid', verifySpecificUserAuth("params", "paymentid"), (req, res) => {
+  try {
+    const { paymentid } = req.params;
+    const updates = req.body;
+
+    const updatedPayment = updatePayment(paymentid, updates);
+
+    if (!updatedPayment) {
+      return res.status(404).json({ error: `Payment ${paymentid} not found` });
+    }
+
+    res.status(200).json(updatedPayment);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+function updatePayment(id, updates) {
+  if (!payments[id]) return null;
+
+  payments[id] = {
+    ...payments[id],
+    ...updates,
+    id: payments[id].id // Prevent accidental overwriting of the primary ID
+  };
+
+  return payments[id];
+}
 
 //--------- Account Services ---------//
 

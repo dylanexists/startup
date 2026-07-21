@@ -158,9 +158,9 @@ Endpoint services I will need to create:
 5. verifyAuth as middleware verification [x]
 6. getEmptyApartments for Find Apartment Dash [x]
 7. getApartment for User [x]
-8. updateApartment for User / Admin
+8. updateApartment for User / Admin [x]
 9. getPayments for User [x]
-10. addPayment for Admin/Server
-11. updatePayment for User
+10. addPayment for Admin/Server [x]
+11. updatePayment for User [x]
 12. getAllApartments for Admin [x]
-13. getAllPayments for Admin
+13. getAllPayments for Admin [x]
