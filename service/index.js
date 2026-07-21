@@ -25,6 +25,9 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+
+//--------- User Services ---------//
+
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
   const { email, password } = req.body || {}
@@ -40,6 +43,25 @@ apiRouter.post('/auth/create', async (req, res) => {
     setAuthCookie(res, user.token);
     res.send({ email: user.email });
   }
+});
+
+// GetAuth login an existing user
+apiRouter.post('/auth/login', async (req, res) => {
+  const { email, password } = req.body || {}
+  if (!email || !password) { // user input sanitization
+    return res.status(400).send({ msg: 'Email and password are required' });
+  }
+
+  const user = await findUserByEmail(email);
+  if (user) {
+    if (await bcrypt.compare(password, user.password)) {
+      user.token = uuid.v4();
+      setAuthCookie(res, user.token);
+      res.send({ email: user.email });
+      return;
+    }
+  }
+  res.status(401).send({ msg: 'Unauthorized' });
 });
 
 async function createUser(email, password) {
