@@ -4,38 +4,53 @@ import { Link } from 'react-router-dom';
 export function FindApartment({ availableApartments }) {
   const [selectedApt, setSelectedApt] = useState(null)
   const [rentalData, setRentalData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const HUD_TOKEN = import.meta.env.VITE_HUD_API_TOKEN
-  const UTAH_COUNTY_ID = '4904999999'
-
-  async function getRentalDataREST() {
-    try {
-        const response = await fetch(`https://www.huduser.gov/hudapi/public/fmr/data/${UTAH_COUNTY_ID}`, {
-        headers: {
-            'Authorization': `Bearer ${HUD_TOKEN}`,
-            'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Fetch error:', error);
-    }
-  }
+  const UTAH_COUNTY_ID = "4904999999"
 
   useEffect(() => {
-    async function loadRentalData() {
-        const rentalDataREST = await getRentalDataREST()
-        if(rentalDataREST?.data?.basicdata){
-            const oneBedroomData = rentalDataREST.data.basicdata['One-Bedroom']
-            setRentalData(oneBedroomData)
+    const controller = new AbortController() //AI suggests using an AbortController in case a user leaves mid-APIcall
+
+    async function fetchRentalData() {
+        try {
+            setLoading(true)
+            setError(null)
+
+            const response = await fetch(`https://www.huduser.gov/hudapi/public/fmr/data/${UTAH_COUNTY_ID}`, {
+            headers: {
+                'Authorization': `Bearer ${HUD_TOKEN}`,
+                'Content-Type': 'application/json'
+                },
+                signal: controller.signal
+            });
+
+            if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`)
+            }
+
+            const rentalDataREST = await response.json()
+
+            if(rentalDataREST?.data?.basicdata){
+                const oneBedroomData = rentalDataREST.data.basicdata["One-Bedroom"]
+                setRentalData(oneBedroomData)
+            } else {
+                throw new Error("Unexpected data structure fetched from API")
+            }
+
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                console.error("Fetch error:", error)
+                setError("Error loading HUD.gov housing data!")
+            }
+        } finally {
+            setLoading(false)
         }
     }
-    loadRentalData()
+
+    fetchRentalData()
+
+    return () => controller.abort()
   }, [])
   
 
@@ -47,10 +62,23 @@ export function FindApartment({ availableApartments }) {
         <div className="text-center">
             
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
+            
+            {loading ? (
+                <h3 className="text-xl font-normal tracking-tight text-gray-900">Loading HUD.gov housing data...</h3>
+            ) : error ? (
+                <>
+                <h3 className="text-xl font-normal tracking-tight text-red-600">{error}</h3>
+                <p>Sorry about that! Just know that RentItBest has great deals, choose an apartment below!</p>
+                </>
+            ) : (
+                <>
+                <h3 className="text-xl font-bold tracking-tight text-gray-900">Average One-Bedroom in Utah County: ${rentalData}/mo</h3>
+                <p>(According to the US Government's Department of Housing and Development)</p>
+                <p>Look below to see the better deals RentItBest has to offer!</p>
+                </>
+            )}
 
-            <h3 className="text-xl font-bold tracking-tight text-gray-900">Average One-Bedroom in Utah County: ${rentalData}/mo</h3>
-
-            <p>Note: The average housing cost in for a One  is: </p>
+            
 
             {availableApartments.length === 0 ? (
               // Display this clean placeholder if everything is taken
