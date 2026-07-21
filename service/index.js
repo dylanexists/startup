@@ -26,6 +26,33 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 
+// Verify user authentication
+const verifyAuth = async (req, res, next) => {
+  const user = await findUserByToken(req.cookies[authCookieName]);
+  if (user) {
+    next();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+};
+
+// Verify Specific user authentication (or admin fetching user data)
+const verifySpecificUserAuth = (paramSource = "params", paramKey = "userid") => {
+    return async (req, res, next) => {
+        const user = await findUserByToken(req.cookies[authCookieName]);
+        if (!user) {
+            return res.status(401).send({ msg: 'Unauthorized!' });
+        } 
+
+        const targetUserId = req[paramSource]?.[paramKey];
+
+        if (user.id !== targetUserId && user.role !== 'Admin') {
+            return res.status(403).send({ msg: 'Forbidden: Access denied' });
+        }
+        next()
+    }
+}
+
 //--------- User Services ---------//
 
 // GetAvailableApartments for Find Apartments Dash
@@ -35,7 +62,7 @@ apiRouter.get('/apartments/available', (req, res) => {
 });
 
 // GetApartment for User
-apiRouter.get('/apartments/:userid', (req, res) => {
+apiRouter.get('/apartments/:userid', verifySpecificUserAuth("params", "userid"), (req, res) => {
   const { userid } = req.params
   const userApartment = Object.values(apartments).find(
     (apt) => apt.linkedUserId === userid)
@@ -87,16 +114,6 @@ apiRouter.delete('/auth/logout', async (req, res) => {
   res.clearCookie(authCookieName);
   res.status(204).end();
 });
-
-// Verify user authentication
-const verifyAuth = async (req, res, next) => {
-  const user = await findUserByToken(req.cookies[authCookieName]);
-  if (user) {
-    next();
-  } else {
-    res.status(401).send({ msg: 'Unauthorized' });
-  }
-};
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10)

@@ -1,8 +1,8 @@
 export const APP_MONTH = 7
 
 export const ACCOUNTS_GLOB = {
-        "admin_0": {id: "0", email: "admin@email.com", password: "admin", role: "Admin"},
-        "user_1": {id: "user_1", email: "user@email.com", password: "user", role: "User"},
+        "admin_0": {id: "0", email: "admin@email.com", password: "$2b$10$5DYvM/QCeCYOtJqz7U95PueI2mFgP9Tt6cuLdHgxwLy5ojd0IMHbC", role: "Admin", token: "1"},
+        "user_1": {id: "user_1", email: "user@email.com", password: "$2b$10$3FHn8ZqxmLnrIkUbjildO.gQ5fxD62GOotAse2xIHYgTcamHGzkF2", role: "User", token: "2"},
     }
 
 export const APARTMENTS_GLOB = {
