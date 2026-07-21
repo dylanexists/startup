@@ -28,6 +28,12 @@ app.use(`/api`, apiRouter);
 
 //--------- User Services ---------//
 
+// GetVacantApartments for Find Apartments Dash
+apiRouter.get('/apartments/available', (req, res) => {
+  const availableApartments = Object.values(apartments).filter(apt => !apt.linkedUserId);
+  res.send(availableApartments);
+});
+
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
   const { email, password } = req.body || {}
@@ -64,6 +70,7 @@ apiRouter.post('/auth/login', async (req, res) => {
   res.status(401).send({ msg: 'Unauthorized' });
 });
 
+// DeleteAuth to logout user
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUserByToken(req.cookies[authCookieName]);
   if (user) {
@@ -72,6 +79,16 @@ apiRouter.delete('/auth/logout', async (req, res) => {
   res.clearCookie(authCookieName);
   res.status(204).end();
 });
+
+// Verify user authentication
+const verifyAuth = async (req, res, next) => {
+  const user = await findUserByToken(req.cookies[authCookieName]);
+  if (user) {
+    next();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+};
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10)
