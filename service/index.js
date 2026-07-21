@@ -28,10 +28,18 @@ app.use(`/api`, apiRouter);
 
 //--------- User Services ---------//
 
-// GetVacantApartments for Find Apartments Dash
+// GetAvailableApartments for Find Apartments Dash
 apiRouter.get('/apartments/available', (req, res) => {
   const availableApartments = Object.values(apartments).filter(apt => !apt.linkedUserId);
   res.send(availableApartments);
+});
+
+// GetApartment for User
+apiRouter.get('/apartments/:userid', (req, res) => {
+  const { userid } = req.params
+  const userApartment = Object.values(apartments).find(
+    (apt) => apt.linkedUserId === userid)
+  res.send(userApartment);
 });
 
 // CreateAuth a new user
