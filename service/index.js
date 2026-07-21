@@ -129,17 +129,37 @@ function updateApartment(id, updates) {
 
   return apartments[id];
 }
+
+
 //--------- Payment Services ---------//
 
+// GetPayments for Admin
+apiRouter.get('/payments/all', verifyAdminAuth, (req, res) => {
+  res.send(payments);
+});
 
-//GetPayments for User
-apiRouter.get('/payments/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), (req, res) => {
+// GetPayments for User
+apiRouter.get('/payments/id/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), (req, res) => {
   const { apartmentid } = req.params
   const userPayments = Object.values(payments).filter(
     (apt) => apt.linkedApartmentId === apartmentid)
   res.send(userPayments);
 });
 
+// Add bulk payments from admin
+apiRouter.post('/payments/bulk', verifyAdminAuth, (req, res) => {
+  const prevCount = Object.keys(payments).length
+  const { newPayments } = req.body; // Expecting an array or object of payment records
+
+  // If using an object like PAYMENTS_GLOB:
+  newPayments.forEach((p) => {
+    payments[p.id] = p;
+  });
+
+  const updatedCount = Object.keys(payments).length
+
+  res.status(200).send({ previousCount: prevCount, updatedCount: updatedCount });
+});
 
 //--------- Account Services ---------//
 
