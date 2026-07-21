@@ -64,6 +64,15 @@ apiRouter.post('/auth/login', async (req, res) => {
   res.status(401).send({ msg: 'Unauthorized' });
 });
 
+apiRouter.delete('/auth/logout', async (req, res) => {
+  const user = await findUserByToken(req.cookies[authCookieName]);
+  if (user) {
+    delete user.token;
+  }
+  res.clearCookie(authCookieName);
+  res.status(204).end();
+});
+
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10)
   const newId = uuid.v4();
@@ -84,6 +93,12 @@ async function findUserByEmail(email) {
   if (!email) return null
 
   return Object.values(users).find((u) => u.email?.toLowerCase() === email.toLowerCase()) || null
+}
+
+async function findUserByToken(token) {
+  if (!token) return null
+
+  return Object.values(users).find((u) => u.token === token) || null
 }
 
 // setAuthCookie in the HTTP response
