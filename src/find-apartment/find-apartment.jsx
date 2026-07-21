@@ -1,8 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export function FindApartment({ availableApartments }) {
   const [selectedApt, setSelectedApt] = useState(null)
+  const [rentalData, setRentalData] = useState(null)
+  const HUD_TOKEN = import.meta.env.VITE_HUD_API_TOKEN
+  const UTAH_COUNTY_ID = '4904999999'
+
+  async function getRentalDataREST() {
+    try {
+        const response = await fetch(`https://www.huduser.gov/hudapi/public/fmr/data/${UTAH_COUNTY_ID}`, {
+        headers: {
+            'Authorization': `Bearer ${HUD_TOKEN}`,
+            'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+  }
+
+  useEffect(() => {
+    async function loadRentalData() {
+        const rentalDataREST = await getRentalDataREST()
+        if(rentalDataREST?.data?.basicdata){
+            const oneBedroomData = rentalDataREST.data.basicdata['One-Bedroom']
+            setRentalData(oneBedroomData)
+        }
+    }
+    loadRentalData()
+  }, [])
+  
 
   return (
     <main className="flex flex-col items-center pt-16 min-h-[calc(100vh-8.25rem)]">
@@ -13,7 +48,9 @@ export function FindApartment({ availableApartments }) {
             
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Available Listings:</h2>
 
-            <p>Note: The average housing cost in Provo is: [API CALL]</p>
+            <h3 className="text-xl font-bold tracking-tight text-gray-900">Average One-Bedroom in Utah County: ${rentalData}/mo</h3>
+
+            <p>Note: The average housing cost in for a One  is: </p>
 
             {availableApartments.length === 0 ? (
               // Display this clean placeholder if everything is taken
