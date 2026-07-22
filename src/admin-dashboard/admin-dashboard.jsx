@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { APP_MONTH } from '../constants';
 
 const getMonthName = (monthNumber) => {
   const months = [
@@ -47,7 +48,9 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments, onSend
 
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 border-2 border-gray-300 rounded p-4">
         <div className="lg:col-span-2 p-6">
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Rental Properties</h2>
+            <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900">Rental Properties</h2>
+            </div>
 
             <div className="gap-6 p-6">
 
@@ -151,6 +154,8 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments, onSend
                             )}
                         </div>
                     </section>
+                    <button onClick={() => setSelectedAptId(apt.id)} className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm m-2">
+                                Send Rent for {getMonthName(APP_MONTH)}</button>
                 </div>
                 </>
             ) : (

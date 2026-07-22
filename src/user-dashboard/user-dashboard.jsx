@@ -79,7 +79,10 @@ export function UserDashboard( { onPaymentUpdate, onRequestMaintenance } ) {
                     <h3>Payment History</h3>
                     <ul className="space-y-3">
                     {userPayments.length === 0 ? (
+                        <>
                         <p className="text-gray-500 italic text-sm">No payment history found.</p>
+                        <p className="text-gray-500 italic text-sm">Your landlord has yet to send out rent charges!</p>
+                        </>
                     ) : (
                         userPayments.map((payment) => (
                             <li key={payment.id} className="p-3 bg-gray-50 border border-gray-200 rounded-md flex justify-between items-center">

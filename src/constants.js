@@ -1,4 +1,4 @@
-export const APP_MONTH = 7
+export const APP_MONTH = 9
 
 export const ACCOUNTS_GLOB = {
         "admin_0": {id: "0", email: "admin@email.com", password: "$2b$10$5DYvM/QCeCYOtJqz7U95PueI2mFgP9Tt6cuLdHgxwLy5ojd0IMHbC", role: "Admin", token: "1"},
@@ -113,7 +113,6 @@ export const APARTMENTS_GLOB = {
 }
 
 export const PAYMENTS_GLOB = {
-        // Apt. 103 (Price: 440, History: Months 6, 7)
     "pay_1234": {
         id: "pay_1234",
         linkedApartmentId: "3",
@@ -126,9 +125,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "3",
         month: 7,
         amount: 445,
-        paidInFull: false,
+        paidInFull: true,
     },
-    // Apt. 104 (Price: 440, History: Months 5, 6, 7)
+
+    // Apt. 104 (Price: 440, History: Months 5, 6, 7, 8)
     "pay_0001": {
         id: "pay_0001",
         linkedApartmentId: "4",
@@ -148,10 +148,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "4",
         month: 7,
         amount: 440,
-        paidInFull: false,
+        paidInFull: true,
     },
 
-    // Apt. 201 (Price: 460, History: Months 6, 7)
+    // Apt. 201 (Price: 460, History: Months 6, 7, 8)
     "pay_0004": {
         id: "pay_0004",
         linkedApartmentId: "5",
@@ -164,10 +164,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "5",
         month: 7,
         amount: 460,
-        paidInFull: false,
+        paidInFull: true,
     },
 
-    // Apt. 202 (Price: 460, History: Months 4, 5, 6, 7)
+    // Apt. 202 (Price: 460, History: Months 4, 5, 6, 7, 8)
     "pay_0006": {
         id: "pay_0006",
         linkedApartmentId: "6",
@@ -194,10 +194,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "6",
         month: 7,
         amount: 460,
-        paidInFull: false,
+        paidInFull: true,
     },
 
-    // Apt. 204 (Price: 485, History: Months 3, 4, 5, 6, 7)
+    // Apt. 204 (Price: 485, History: Months 3, 4, 5, 6, 7, 8)
     "pay_0010": {
         id: "pay_0010",
         linkedApartmentId: "8",
@@ -231,10 +231,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "8",
         month: 7,
         amount: 485,
-        paidInFull: false,
+        paidInFull: true,
     },
 
-    // Apt. 301 (Price: 515, History: Months 5, 6, 7)
+    // Apt. 301 (Price: 515, History: Months 5, 6, 7, 8)
     "pay_0015": {
         id: "pay_0015",
         linkedApartmentId: "9",
@@ -254,10 +254,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "9",
         month: 7,
         amount: 515,
-        paidInFull: false,
+        paidInFull: true,
     },
 
-    // Apt. 302 (Price: 500, History: Months 6, 7)
+    // Apt. 302 (Price: 500, History: Months 6, 7, 8)
     "pay_0018": {
         id: "pay_0018",
         linkedApartmentId: "10",
@@ -270,10 +270,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "10",
         month: 7,
         amount: 500,
-        paidInFull: false,
+        paidInFull: true,
     },
 
-    // Apt. 303 (Price: 525, History: Months 4, 5, 6, 7)
+    // Apt. 303 (Price: 525, History: Months 4, 5, 6, 7, 8)
     "pay_0020": {
         id: "pay_0020",
         linkedApartmentId: "11",
@@ -300,10 +300,10 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "11",
         month: 7,
         amount: 525,
-        paidInFull: false,
+        paidInFull: true,
     },
 
-    // Apt. 304 (Price: 520, History: Months 5, 6, 7)
+    // Apt. 304 (Price: 520, History: Months 5, 6, 7, 8)
     "pay_0024": {
         id: "pay_0024",
         linkedApartmentId: "12",
@@ -322,6 +322,92 @@ export const PAYMENTS_GLOB = {
         id: "pay_0026",
         linkedApartmentId: "12",
         month: 7,
+        amount: 520,
+        paidInFull: true,
+    },
+
+    // --- Month 8 Payments ---
+    "pay_0027": {
+        id: "pay_0027",
+        linkedApartmentId: "1",
+        month: 8,
+        amount: 440,
+        paidInFull: false,
+    },
+    "pay_0028": {
+        id: "pay_0028",
+        linkedApartmentId: "2",
+        month: 8,
+        amount: 500,
+        paidInFull: false,
+    },
+    "pay_0029": {
+        id: "pay_0029",
+        linkedApartmentId: "3",
+        month: 8,
+        amount: 445,
+        paidInFull: false,
+    },
+    "pay_0030": {
+        id: "pay_0030",
+        linkedApartmentId: "4",
+        month: 8,
+        amount: 440,
+        paidInFull: false,
+    },
+    "pay_0031": {
+        id: "pay_0031",
+        linkedApartmentId: "5",
+        month: 8,
+        amount: 460,
+        paidInFull: false,
+    },
+    "pay_0032": {
+        id: "pay_0032",
+        linkedApartmentId: "6",
+        month: 8,
+        amount: 460,
+        paidInFull: false,
+    },
+    "pay_0033": {
+        id: "pay_0033",
+        linkedApartmentId: "7",
+        month: 8,
+        amount: 480,
+        paidInFull: false,
+    },
+    "pay_0034": {
+        id: "pay_0034",
+        linkedApartmentId: "8",
+        month: 8,
+        amount: 485,
+        paidInFull: false,
+    },
+    "pay_0035": {
+        id: "pay_0035",
+        linkedApartmentId: "9",
+        month: 8,
+        amount: 515,
+        paidInFull: false,
+    },
+    "pay_0036": {
+        id: "pay_0036",
+        linkedApartmentId: "10",
+        month: 8,
+        amount: 500,
+        paidInFull: false,
+    },
+    "pay_0037": {
+        id: "pay_0037",
+        linkedApartmentId: "11",
+        month: 8,
+        amount: 525,
+        paidInFull: false,
+    },
+    "pay_0038": {
+        id: "pay_0038",
+        linkedApartmentId: "12",
+        month: 8,
         amount: 520,
         paidInFull: false,
     }
