@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { APP_MONTH } from '../constants';
+import { APP_MONTH } from '../../service/constants';
 
 const getMonthName = (monthNumber) => {
   const months = [
