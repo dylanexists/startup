@@ -12,18 +12,24 @@ export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
     onAutoLogout()
   }, [])
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     setError('')
 
-    const foundUser = Object.values(accounts).find(
-        (acnt) => acnt.email.toLowerCase() === email.toLowerCase() && acnt.password === password
-    )
-
-    if (foundUser) {
-        onLoginSuccess(foundUser)
+    const response = await fetch(`/api/auth/login`, {
+        method: "post",
+        body: JSON.stringify({ email: email, password: password }),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    if (response?.status === 200) {
+        const body = await response.json();
+        const newUser = body.user
+        onLoginSuccess(newUser)
     } else {
-        setError('Invalid email or password')
+        const body = await response.json();
+        setError(`${body.msg}`)
     }
   }
 

@@ -217,7 +217,6 @@ apiRouter.post('/auth/create', async (req, res) => {
     res.status(409).send({ msg: 'An account already exists with this email. Please try a different email.' });
   } else {
     const user = await createUser(email, password);
-    console.log('Register worked!')
     setAuthCookie(res, user.token);
     res.send({ user: user });
   }
@@ -235,11 +234,11 @@ apiRouter.post('/auth/login', async (req, res) => {
     if (await bcrypt.compare(password, user.password)) {
       user.token = uuid.v4();
       setAuthCookie(res, user.token);
-      res.send({ email: user.email });
+      res.send({ user: user });
       return;
     }
   }
-  res.status(401).send({ msg: 'Unauthorized' });
+  res.status(401).send({ msg: 'Invalid email or password' });
 });
 
 // DeleteAuth to logout user

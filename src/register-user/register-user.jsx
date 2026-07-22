@@ -24,7 +24,6 @@ export function RegisterUser({ accounts, onRegisterSuccess }) {
   async function handleRegister(e) {
     e.preventDefault()
     setError('')
-    
 
     const response = await fetch(`/api/auth/create`, {
         method: "post",
