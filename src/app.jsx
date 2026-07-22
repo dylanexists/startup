@@ -32,10 +32,6 @@ function AppContent() {
     return saved ? JSON.parse(saved) : null
   })
 
-  React.useEffect(() => {
-  console.log("Updated Apartments State:", allApartments);
-}, [allApartments]);
-
   function handlePaymentUpdate(updatedPayment) {
     setPayments((prevPayments) => ({
         ...prevPayments,
@@ -62,7 +58,6 @@ function AppContent() {
     if (savedUserApartment) {
         localStorage.setItem('userApartment', JSON.stringify(updatedApartment))
     }
-    console.log(localStorage.getItem('userApartment'))
   }
 
   function handleSendTechnician(updatedApartment) {
@@ -72,21 +67,19 @@ function AppContent() {
     }))
   }
 
-  function handleLoginSuccess(user, currentApartments = allApartments) { //have to add currentApartments because React State is weird
+  async function handleLoginSuccess(user) {
     setCurrentUser(user)
     localStorage.setItem('currentUser', JSON.stringify(user))
     if (user.role === 'Admin') {
             navigate('/admin-dashboard')
         } else {
-            const userApartment = Object.values(currentApartments).find(
-                (apt) => apt.linkedUserId === user.id)
+            const userApartment = await getUserApartment(user.id)
             if (userApartment) {
                 localStorage.setItem('userApartment', JSON.stringify(userApartment))
-                const userPayments = getPaymentsByUserId(user.id, currentApartments)
+                const userPayments = await getUserPaymentsFromApt(userApartment.id)
                 localStorage.setItem('userPayments', JSON.stringify(userPayments))
                 navigate('/user-dashboard')
             } else {
-                console.log("Error finding user's apartment!")
                 return
             }
         }
@@ -126,17 +119,20 @@ function AppContent() {
     });
   }
 
-  function getPaymentsByUserId(userId, currentApartments = allApartments) {
-    const userApartment = Object.values(currentApartments).find(
-        apt => apt.linkedUserId === userId
-    )
-    if (!userApartment) return []
-
-    const aptPayments = Object.values(payments).filter(
-        payment => payment.linkedApartmentId === userApartment.id
-    )
-
-    return checkOrAddThisMonthsPayment(aptPayments, userApartment)
+  async function getUserPaymentsFromApt(apartmentId) {
+    try {
+        const response = await fetch(`/api/payments/id/${apartmentId}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const payments = await response.json();
+        return payments;
+    } catch (error) {
+        console.error('Failed to fetch user payments:', error);
+        return null;
+    }
   }
 
   function checkOrAddThisMonthsPayment(aptPayments, apartment) {
@@ -156,6 +152,22 @@ function AppContent() {
             [nextId]: newPayment,
         }))
         return [...aptPayments, newPayment]
+    }
+  }
+
+  async function getUserApartment(userId) {
+    try {
+        const response = await fetch(`/api/apartments/user/${userId}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const apt = await response.json();
+        return apt;
+    } catch (error) {
+        console.error('Failed to fetch user apartment:', error);
+        return null;
     }
   }
   

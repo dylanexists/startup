@@ -104,7 +104,7 @@ apiRouter.get('/apartments/user/:userid', verifySpecificUserAuth("params", "user
   const { userid } = req.params
   const userApartment = Object.values(apartments).find(
     (apt) => apt.linkedUserId === userid)
-  res.send(userApartment);
+  res.json(userApartment);
 });
 
 // GetApartments for Admin
