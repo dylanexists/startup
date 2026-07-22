@@ -112,11 +112,18 @@ function AppContent() {
 }
 
   function handleLogout() {
-    setCurrentUser(null)
-    localStorage.removeItem('currentUser')
-    localStorage.removeItem('userApartment')
-    localStorage.removeItem('userPayments')
-    navigate('/')
+    fetch(`/api/auth/logout`, {
+        method: 'delete',
+    }) .catch(() => {
+        // Logout failed. Assuming offline
+    })
+    .finally(() => {
+        setCurrentUser(null)
+        localStorage.removeItem('currentUser')
+        localStorage.removeItem('userApartment')
+        localStorage.removeItem('userPayments')
+        navigate('/')
+    });
   }
 
   function getPaymentsByUserId(userId, currentApartments = allApartments) {
