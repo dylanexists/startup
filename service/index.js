@@ -214,12 +214,12 @@ apiRouter.post('/auth/create', async (req, res) => {
   }
 
   if (await findUserByEmail(email)) {
-    res.status(409).send({ msg: 'Existing user' });
+    res.status(409).send({ msg: 'An account already exists with this email. Please try a different email.' });
   } else {
     const user = await createUser(email, password);
-
+    console.log('Register worked!')
     setAuthCookie(res, user.token);
-    res.send({ email: user.email });
+    res.send({ user: user });
   }
 });
 

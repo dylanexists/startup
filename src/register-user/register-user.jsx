@@ -21,26 +21,27 @@ export function RegisterUser({ accounts, onRegisterSuccess }) {
     setApartment(parsedApt)
   }, [navigate])
 
-  function handleRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault()
     setError('')
+    
 
-    const foundUser = Object.values(accounts).find(
-        (acnt) => acnt.email.toLowerCase() === email.toLowerCase()
-    )
-
-    const newUser = 
-        {id: `user_${Date.now()}`, 
-        email: email, 
-        password: password, 
-        role: "User"}
-
-    if (!foundUser) {
+    const response = await fetch(`/api/auth/create`, {
+        method: "post",
+        body: JSON.stringify({ email: email, password: password }),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    if (response?.status === 200) {
+        const body = await response.json();
+        const newUser = body.user
         onRegisterSuccess(newUser, apartment)
         localStorage.removeItem('pendingApartment')
         navigate('/user-dashboard')
     } else {
-        setError('An account already exists with this email. Please try a different email.')
+        const body = await response.json();
+        setError(`${body.msg}`)
     }
   }
 
