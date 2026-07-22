@@ -10,8 +10,9 @@ const getMonthName = (monthNumber) => {
   return months[monthNumber - 1] || "Unknown";
 };
 
-export function AdminDashboard({ allApartments, allAccounts, allPayments, onSendTechnician }) {
-  const apartmentsArray = Object.values(allApartments || {})
+export function AdminDashboard({ onSendTechnician }) {
+  const [allApartments, setAllApartments] = useState(null)
+  const [allPayments, setAllPayments] = useState(null)
   const [selectedAptId, setSelectedAptId] = useState(null)
   const selectedApartment = selectedAptId ? allApartments[selectedAptId] : null
   const navigate = useNavigate()
@@ -21,26 +22,91 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments, onSend
       return saved ? JSON.parse(saved) : null
     })
 
+    const [tenantEmail, setTenantEmail] = useState('Loading...');
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (selectedApartment?.linkedUserId) {
+      getAptTenant(selectedApartment.linkedUserId).then(email => {
+        if (isMounted) {
+          setTenantEmail(email);
+        }
+      });
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedApartment?.linkedUserId]);
+
   useEffect(() => {
     if (!user || user.role !== "Admin") {
         navigate('/')
         return
     }
+
+    fetch('/api/apartments/all')
+      .then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+        })
+      .then((apts) => {
+        const aptsMap = Array.isArray(apts)
+          ? apts.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {})
+          : apts;
+        setAllApartments(aptsMap);
+        })
+      .catch((error) => {
+        console.error('Failed to fetch available apartments:', error);
+        })
+    
+    fetch('/api/payments/all')
+      .then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+        })
+      .then((pmts) => {
+        const pmtsMap = Array.isArray(pmts)
+          ? pmts.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {})
+          : pmts;
+        setAllPayments(pmtsMap);
+        })
+      .catch((error) => {
+        console.error('Failed to fetch available payments:', error);
+        })
     }, [user, navigate])
 
-  function getAptTenant(userId) {
-    const account = allAccounts[userId];
-
-    return account ? account.email : 'Placeholder Tenant';
+  async function getAptTenant(userId) {
+    try {
+        const response = await fetch(`/api/auth/id/${userId}`);
+        if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const account = await response.json();
+        return account ? account.email : 'Placeholder Tenant';
+    } catch (error) {
+        return 'Placeholder Tenant';
+    }
   }
 
   function handleSendTechnician() {
-    const updatedApartment = {
-        ...selectedApartment,
-        technicianSent:true
-    }
-    if(onSendTechnician) {onSendTechnician(updatedApartment)}
+    setAllApartments((prev) => ({
+    ...prev,
+    [selectedAptId]: {
+      ...prev[selectedAptId],
+      technicianSent: true,
+    },
+  }));
+
+    if(onSendTechnician) {onSendTechnician(selectedAptId)}
   }
+
+  const apartmentList = allApartments ? Object.values(allApartments) : [];
 
   return (
     <main className="flex flex-col items-center min-h-[calc(100vh-4rem)]">
@@ -55,7 +121,7 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments, onSend
             <div className="gap-6 p-6">
 
                 <div className="grid-container">
-                    {apartmentsArray.map((apt) => {
+                    {apartmentList.map((apt) => {
                         const isSelected = apt.id === selectedAptId
                         const isVacant = !apt.linkedUserId
                         return (
@@ -102,7 +168,7 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments, onSend
             {selectedApartment.linkedUserId ? (
                 <>
                 <span className="flex text-xl font-bold justify-center mb-8">
-                    {getAptTenant(selectedApartment.linkedUserId)}
+                    {tenantEmail}
                 </span>
                 <div className="card-footer">
                     <section className="p-6 bg-white border w-full border-gray-300 rounded-lg shadow-sm space-y-6 m-4">
@@ -154,8 +220,7 @@ export function AdminDashboard({ allApartments, allAccounts, allPayments, onSend
                             )}
                         </div>
                     </section>
-                    <button onClick={() => setSelectedAptId(apt.id)} className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm m-2">
-                                Send Rent for {getMonthName(APP_MONTH)}</button>
+                    
                 </div>
                 </>
             ) : (

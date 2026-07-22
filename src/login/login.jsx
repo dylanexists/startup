@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AdminNote from './AdminNote'
 
-export function Login({ accounts, onLoginSuccess, onAutoLogout }) {
+export function Login({ onLoginSuccess, onAutoLogout }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')

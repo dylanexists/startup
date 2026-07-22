@@ -164,3 +164,9 @@ Endpoint services I will need to create:
 11. updatePayment for User [x]
 12. getAllApartments for Admin [x]
 13. getAllPayments for Admin [x]
+
+Possible edition of
+```
+<button onClick={() => setSelectedAptId(apt.id)} className="bg-[#0f417a] hover:bg-[#0a2f58] text-white font-semibold py-2 px-6 rounded-md shadow-sm m-2">
+                                Send Rent for {getMonthName(APP_MONTH)}</button>
+```

@@ -360,7 +360,7 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "5",
         month: 8,
         amount: 460,
-        paidInFull: false,
+        paidInFull: true,
     },
     "pay_0032": {
         id: "pay_0032",
@@ -388,7 +388,7 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "9",
         month: 8,
         amount: 515,
-        paidInFull: false,
+        paidInFull: true,
     },
     "pay_0036": {
         id: "pay_0036",
@@ -402,7 +402,7 @@ export const PAYMENTS_GLOB = {
         linkedApartmentId: "11",
         month: 8,
         amount: 525,
-        paidInFull: false,
+        paidInFull: true,
     },
     "pay_0038": {
         id: "pay_0038",

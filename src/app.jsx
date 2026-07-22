@@ -20,11 +20,7 @@ export default function App() {
 }
 
 function AppContent() {
-  const  [allApartments, setAllApartments] = useState(APARTMENTS_GLOB)
-  const availableApartments = Object.values(allApartments).filter(apt => !apt.linkedUserId);
-
   const [payments, setPayments] = useState(PAYMENTS_GLOB)
-  const [accounts, setAccounts] = useState(ACCOUNTS_GLOB)
   const navigate = useNavigate()
   
   const [currentUser, setCurrentUser] = useState(() => {
@@ -32,11 +28,24 @@ function AppContent() {
     return saved ? JSON.parse(saved) : null
   })
 
-  function handlePaymentUpdate(updatedPayment) {
-    setPayments((prevPayments) => ({
-        ...prevPayments,
-        [updatedPayment.id] : updatedPayment
-    }))
+  async function handlePaymentUpdate(updatedPayment) {
+    try {
+        const response = await fetch(`/api/payments/id/${updatedPayment.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({paidInFull: true}),
+        });
+
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error(data.error || `Request failed with status ${response.status}`);
+        }
+    } catch (error) {
+        return null
+    }
     
     const savedUserPayments = localStorage.getItem('userPayments')
     if (savedUserPayments) {
@@ -48,23 +57,44 @@ function AppContent() {
     }
   }
 
-  function handleRequestMaintenance(updatedApartment) {
-    setAllApartments((prevApartments) => ({
-        ...prevApartments,
-        [updatedApartment.id] : updatedApartment
-    }))
-    
-    const savedUserApartment = localStorage.getItem('userApartment')
-    if (savedUserApartment) {
-        localStorage.setItem('userApartment', JSON.stringify(updatedApartment))
+  async function handleRequestMaintenance(updatedApartmentId) {
+    try {
+        const response = await fetch(`/api/apartments/id/${updatedApartmentId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({maintenanceRequested: true}),
+        });
+
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error(data.error || `Request failed with status ${response.status}`);
+        }
+    } catch (error) {
+        return null
     }
   }
 
-  function handleSendTechnician(updatedApartment) {
-    setAllApartments((prevApartments) => ({
-        ...prevApartments,
-        [updatedApartment.id] : updatedApartment
-    }))
+  async function handleSendTechnician(updatedApartmentId) {
+    try {
+        const response = await fetch(`/api/apartments/id/${updatedApartmentId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({technicianSent: true}),
+        });
+
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error(data.error || `Request failed with status ${response.status}`);
+        }
+    } catch (error) {
+        return null
+    }
   }
 
   async function handleLoginSuccess(user) {
@@ -144,26 +174,6 @@ function AppContent() {
     }
   }
 
-  function checkOrAddThisMonthsPayment(aptPayments, apartment) {
-    if (aptPayments.some(payment => payment.month === APP_MONTH)) {
-        return aptPayments
-    } else {
-        const nextId = `pay_${Date.now()}`
-        const newPayment = {
-            id: nextId,
-            linkedApartmentId: apartment.id,
-            month: APP_MONTH,
-            amount: apartment.price,
-            paidInFull: false
-        }
-        setPayments(prevPayments => ({ //update local storage
-            ...prevPayments,
-            [nextId]: newPayment,
-        }))
-        return [...aptPayments, newPayment]
-    }
-  }
-
   async function getUserApartment(userId) {
     try {
         const response = await fetch(`/api/apartments/user/${userId}`);
@@ -209,7 +219,6 @@ function AppContent() {
         <Routes>
             <Route path='/' 
             element={<Login 
-            accounts={accounts}
             onLoginSuccess={handleLoginSuccess}
             onAutoLogout={handleLogout}/>} 
             />
@@ -218,14 +227,10 @@ function AppContent() {
             />
             <Route path='/register-user' 
             element={<RegisterUser 
-            accounts={accounts}
             onRegisterSuccess={handleRegisterSuccess}/>} 
             />
             <Route path='/admin-dashboard' 
             element={<AdminDashboard 
-            allApartments={allApartments}
-            allAccounts={accounts}
-            allPayments={payments}
             onSendTechnician={handleSendTechnician}/>} 
             />
             <Route path='/user-dashboard' 

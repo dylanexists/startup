@@ -265,6 +265,13 @@ apiRouter.delete('/auth/logout', async (req, res) => {
   res.status(204).end();
 });
 
+// GetUser for Admin
+apiRouter.get('/auth/id/:userid', verifyAdminAuth, (req, res) => {
+  const { userid } = req.params
+  const user = users[userid]
+  return res.status(200).json(user);
+});
+
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10)
   const newId = uuid.v4();

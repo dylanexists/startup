@@ -45,13 +45,17 @@ export function UserDashboard( { onPaymentUpdate, onRequestMaintenance } ) {
     if(onPaymentUpdate) {onPaymentUpdate(updatedPayment)}
   }
 
-  function handleRequestMaintenance() {
+  async function handleRequestMaintenance() {
     const updatedApartment = {
         ...apartment,
         maintenanceRequested:true
     }
     setApartment(updatedApartment)
-    if(onRequestMaintenance) {onRequestMaintenance(updatedApartment)}
+    if(onRequestMaintenance) {await onRequestMaintenance(updatedApartment.id)}
+    const savedUserApartment = localStorage.getItem('userApartment')
+    if (savedUserApartment) {
+        localStorage.setItem('userApartment', JSON.stringify(updatedApartment))
+    }
   }
   
 
