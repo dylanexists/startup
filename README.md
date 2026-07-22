@@ -148,14 +148,14 @@ I completed the following this for the Ractivity deliverable!
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Node.js/Express HTTP service** - I completed this deliverable fully!
+- [x] **Static middleware for frontend** - I followed instructions exactly to complete this.
 - [x] **Calls to third party endpoints** - I setup an authToken with HUD Fair Market Rents to get average rental price for 1-bed in Utah County (on Find Apartments page)
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
-- [ ] **Uses BCrypt to hash passwords** - I did not complete this part of the deliverable.
+- [x] **Backend service endpoints** - I made over 13 backend service endpoints!
+- [x] **Frontend calls service endpoints** - I called each endpoint one or more times from the front end
+- [x] **Supports registration, login, logout, and restricted endpoint** - I created a very intuitive registration, login, logout, and role restricted workflow.
+- [x] **Uses BCrypt to hash passwords** - I did use BCrypt for password hashing.
 
 ## 🚀 DB deliverable
 

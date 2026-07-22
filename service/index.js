@@ -2,7 +2,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
-const { ACCOUNTS_GLOB, APARTMENTS_GLOB, PAYMENTS_GLOB } = require('./constants');
+const { ACCOUNTS_GLOB, APARTMENTS_GLOB, PAYMENTS_GLOB } = require('./constants.js');
 const app = express();
 
 const authCookieName = "token"
@@ -170,21 +170,6 @@ apiRouter.get('/payments/id/:apartmentid', verifySpecificUserAuth("params", "apa
   const userPayments = Object.values(payments).filter(
     (apt) => apt.linkedApartmentId === apartmentid)
   res.status(200).json(userPayments);
-});
-
-// Add bulk payments from admin
-apiRouter.post('/payments/bulk', verifyAdminAuth, (req, res) => {
-  const prevCount = Object.keys(payments).length
-  const { newPayments } = req.body; // Expecting an array or object of payment records
-
-  // If using an object like PAYMENTS_GLOB:
-  newPayments.forEach((p) => {
-    payments[p.id] = p;
-  });
-
-  const updatedCount = Object.keys(payments).length
-
-  res.status(200).send({ previousCount: prevCount, updatedCount: updatedCount });
 });
 
 // updatePayment for User
