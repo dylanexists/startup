@@ -66,6 +66,20 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
             if (!apartment) {
                 return res.status(404).send({ msg: 'Apartment not found' });
             }
+            if (!apartment.linkedUserId) {
+      // if no user assigned, let admins or self-assigning users in
+        if (user.role === 'Admin') {
+          return next();
+        }
+
+        const isSelfAssigning = req.body?.linkedUserId === user.id;
+
+        if (isSelfAssigning) {
+          return next()
+        }
+
+        return res.status(403).send({ msg: 'Forbidden: You can only assign this apartment to yourself' });
+      }
             targetUserId = apartment.linkedUserId;
         }
 
@@ -155,7 +169,7 @@ apiRouter.get('/payments/id/:apartmentid', verifySpecificUserAuth("params", "apa
   const { apartmentid } = req.params
   const userPayments = Object.values(payments).filter(
     (apt) => apt.linkedApartmentId === apartmentid)
-  res.send(userPayments);
+  res.status(200).json(userPayments);
 });
 
 // Add bulk payments from admin
@@ -285,7 +299,7 @@ function setAuthCookie(res, authToken) {
     maxAge: 1000 * 60 * 60 * 24 * 365,
     secure: false,
     httpOnly: true,
-    sameSite: 'strict',
+    sameSite: 'lax',
   });
 }
 

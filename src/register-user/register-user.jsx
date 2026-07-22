@@ -37,7 +37,6 @@ export function RegisterUser({ accounts, onRegisterSuccess }) {
         const newUser = body.user
         onRegisterSuccess(newUser, apartment)
         localStorage.removeItem('pendingApartment')
-        navigate('/user-dashboard')
     } else {
         const body = await response.json();
         setError(`${body.msg}`)

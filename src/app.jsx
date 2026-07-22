@@ -85,23 +85,12 @@ function AppContent() {
         }
   }
   
-  function handleRegisterSuccess(newUser, purchasedApt) {
-    const accountID = newUser.id
-    setAccounts(prevAccounts => ({
-        ...prevAccounts,
-        [accountID]: newUser,
-    }))
+  async function handleRegisterSuccess(newUser, purchasedApt) {
+    const userId = newUser.id
 
-    const nextApartmentsState = {
-        ...allApartments,
-        [purchasedApt.id]: {
-            ...allApartments[purchasedApt.id],
-            linkedUserId: accountID
-        }
-    }
-    setAllApartments(nextApartmentsState)
+    await updateUserApartment(userId, purchasedApt)
 
-    handleLoginSuccess(newUser, nextApartmentsState) //auto login on successful registration
+    await handleLoginSuccess(newUser) //auto login on successful registration
 }
 
   function handleLogout() {
@@ -119,6 +108,26 @@ function AppContent() {
     });
   }
 
+  async function updateUserApartment(userId, apartment) {
+    try {
+        const response = await fetch(`/api/apartments/id/${apartment.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({linkedUserId: userId}),
+        });
+
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error(data.error || `Request failed with status ${response.status}`);
+        }
+    } catch (error) {
+        return null
+    }
+  }
+
   async function getUserPaymentsFromApt(apartmentId) {
     try {
         const response = await fetch(`/api/payments/id/${apartmentId}`);
@@ -127,8 +136,8 @@ function AppContent() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        const payments = await response.json();
-        return payments;
+        const usersPayments = await response.json();
+        return usersPayments
     } catch (error) {
         console.error('Failed to fetch user payments:', error);
         return null;
