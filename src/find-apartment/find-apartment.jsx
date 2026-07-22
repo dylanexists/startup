@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 const HUD_TOKEN = import.meta.env.VITE_HUD_API_TOKEN
 
 
-export function FindApartment({ availableApartments }) {
+export function FindApartment() {
   const [selectedApt, setSelectedApt] = useState(null)
   const [rentalData, setRentalData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const UTAH_COUNTY_ID = "4904999999"
+
+  const [availableApartments, setAvailableApartments] = useState([])
 
   useEffect(() => {
     const controller = new AbortController() //AI suggests using an AbortController in case a user leaves mid-APIcall
@@ -51,6 +53,20 @@ export function FindApartment({ availableApartments }) {
     }
 
     fetchRentalData()
+
+    fetch('/api/apartments/available')
+      .then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+        })
+      .then((apts) => {
+        setAvailableApartments(apts);
+        })
+      .catch((error) => {
+        console.error('Failed to fetch available apartments:', error);
+        })
 
     return () => controller.abort()
   }, [])

@@ -193,8 +193,7 @@ function AppContent() {
             onAutoLogout={handleLogout}/>} 
             />
             <Route path='/find-apartment' 
-            element={<FindApartment 
-            availableApartments={availableApartments}/>} 
+            element={<FindApartment />} 
             />
             <Route path='/register-user' 
             element={<RegisterUser 

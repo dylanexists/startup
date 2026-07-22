@@ -96,7 +96,7 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
 // GetAvailableApartments for Find Apartments Dash
 apiRouter.get('/apartments/available', (req, res) => {
   const availableApartments = Object.values(apartments).filter(apt => !apt.linkedUserId);
-  res.send(availableApartments);
+  res.json(availableApartments);
 });
 
 // GetApartment for User
@@ -109,7 +109,7 @@ apiRouter.get('/apartments/user/:userid', verifySpecificUserAuth("params", "user
 
 // GetApartments for Admin
 apiRouter.get('/apartments/all', verifyAdminAuth, (req, res) => {
-  res.send(apartments);
+  res.json(apartments);
 });
 
 // updateApartment for User
