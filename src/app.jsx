@@ -8,7 +8,6 @@ import { RegisterUser } from './register-user/register-user';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { UserDashboard } from './user-dashboard/user-dashboard';
 import ScrollToTop from './ScrollToTop';
-import { APP_MONTH, PAYMENTS_GLOB, APARTMENTS_GLOB, ACCOUNTS_GLOB } from './constants';
 
 export default function App() {
     return (
@@ -20,7 +19,6 @@ export default function App() {
 }
 
 function AppContent() {
-  const [payments, setPayments] = useState(PAYMENTS_GLOB)
   const navigate = useNavigate()
   
   const [currentUser, setCurrentUser] = useState(() => {
