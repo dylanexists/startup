@@ -1,2 +1,4 @@
 node_modules/
 .env
+service/dbConfig.json
+testMongo/dbConfig.json
