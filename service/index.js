@@ -232,9 +232,10 @@ apiRouter.post('/auth/login', async (req, res) => {
   const user = await findUserByEmail(email);
   if (user) {
     if (await bcrypt.compare(password, user.password)) {
-      user.token = uuid.v4();
-      setAuthCookie(res, user.token);
-      res.send({ user: user });
+      user.token = uuid.v4()
+      setAuthCookie(res, user.token)
+      DB.updateUser(user)
+      res.send({ user: user })
       return;
     }
   }
