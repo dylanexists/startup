@@ -4,6 +4,7 @@ const express = require('express');
 const uuid = require('uuid');
 const { ACCOUNTS_GLOB, APARTMENTS_GLOB, PAYMENTS_GLOB } = require('./constants.js');
 const app = express();
+const DB = require('./database.js');
 
 const authCookieName = "token"
 const adminRole = "Admin"
@@ -253,7 +254,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 // GetUser for Admin
 apiRouter.get('/auth/id/:userid', verifyAdminAuth, (req, res) => {
   const { userid } = req.params
-  const user = users[userid]
+  const user = DB.getUser(userid)
   return res.status(200).json(user);
 });
 
@@ -268,7 +269,7 @@ async function createUser(email, password) {
         role: "User",
         token: uuid.v4()}
 
-  users[newId] = newUser
+  await DB.addUser(newUser)
 
   return newUser
 }
@@ -276,13 +277,13 @@ async function createUser(email, password) {
 async function findUserByEmail(email) {
   if (!email) return null
 
-  return Object.values(users).find((u) => u.email?.toLowerCase() === email.toLowerCase()) || null
+  return DB.getUserByEmail(email)
 }
 
 async function findUserByToken(token) {
   if (!token) return null
 
-  return Object.values(users).find((u) => u.token === token) || null
+  return DB.getUserByToken(token)
 }
 
 // setAuthCookie in the HTTP response
