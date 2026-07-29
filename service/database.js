@@ -44,6 +44,27 @@ async function updateUserRemoveAuth(user) {
   await userCollection.updateOne({ email: user.email }, { $unset: { token: 1 } })
 }
 
+async function getAvailableApartments() {
+    return apartmentCollection.find({ linkedUserId: { $exists: false }})
+    .toArray()
+}
+
+async function getApartment(apartmentid) {
+    return apartmentCollection.findOne({ id: apartmentid })
+}
+
+async function getApartmentForUser(userid) {
+    return apartmentCollection.findOne({ linkedUserId: userid })
+}
+
+async function getApartmentsForAdmin() {
+    return apartmentCollection.find({}).toArray()
+}
+
+async function updateApartment(apartment) {
+    await apartmentCollection.updateOne({ id: apartment.id }, { $set: apartment })
+}
+
 module.exports = {
     getUser,
     getUserByEmail,
@@ -51,4 +72,9 @@ module.exports = {
     addUser,
     updateUser,
     updateUserRemoveAuth,
+    getAvailableApartments,
+    getApartment,
+    getApartmentForUser,
+    getApartmentsForAdmin,
+    updateApartment,
 }
