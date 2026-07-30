@@ -70,6 +70,16 @@ export function FindApartment() {
 
     return () => controller.abort()
   }, [])
+
+  // Scroll to bottom on apartment click
+  useEffect(() => {
+  if (selectedApt) {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+}, [selectedApt])
   
 
   return (
@@ -116,16 +126,20 @@ export function FindApartment() {
                         <h4 className="card-title">{apt.title}</h4>
                         
                         <div className="card-footer">
-                            <p>{apt.description}</p>
+                            <div className="card-footer-content">
+                                <p className="font-bold">{apt.description}</p>
+                                
+                                {apt.features.map((feature, index) => (
+                                <p key={index}>- {feature}</p>
+                                ))}
+                            </div>
                             
-                            {apt.features.map((feature, index) => (
-                            <p key={index}>- {feature}</p>
-                            ))}
-                            
-                            <span className="card-price">${apt.price}/mo</span>
-                            <button className="card-button"
-                            onClick={() => setSelectedApt(apt)}>
-                            View</button>
+                            <div className="card-footer-actions">
+                                <span className="card-price">${apt.price}/mo</span>
+                                <button className="card-button"
+                                onClick={() => setSelectedApt(apt)}>
+                                View</button>
+                            </div>
                         </div>
                     </div>
                     ))}

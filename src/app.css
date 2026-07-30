@@ -39,7 +39,7 @@ a, .nav-button {
   border: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .card-selected {
@@ -61,8 +61,24 @@ a, .nav-button {
   margin-top: 0.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex: 1;
+  align-items: stretch;
   gap: 1rem;
+}
+
+.card-footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Aligns text cleanly to the left */
+  gap: 0.25rem;
+}
+
+.card-footer-actions {
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Guarantees actions stick to the bottom */
 }
 
 .card-price {

@@ -30,7 +30,6 @@ app.use(`/api`, apiRouter);
 
 //--------- Verification Middleware ---------//
 
-
 // Verify user authentication
 const verifyAuth = async (req, res, next) => {
   const user = await findUserByToken(req.cookies[authCookieName]);
