@@ -63,7 +63,7 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
         let targetUserId = paramValue
 
         if (paramKey === 'apartmentid') {
-            const apartment = apartments[paramValue];
+            const apartment = DB.getApartment(paramValue)
             if (!apartment) {
                 return res.status(404).send({ msg: 'Apartment not found' });
             }
@@ -90,7 +90,7 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
                 return res.status(404).send({ msg: 'Payment not found' });
             }
             const targetAptId = payment.linkedApartmentId
-            const apartment = apartments[targetAptId];
+            const apartment = DB.getApartment(targetAptId)
             if (!apartment) {
                 return res.status(404).send({ msg: 'Apartment from payment not found' });
             }
@@ -109,22 +109,30 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
 
 
 // GetAvailableApartments for Find Apartments Dash
-apiRouter.get('/apartments/available', (req, res) => {
-  const availableApartments = Object.values(apartments).filter(apt => !apt.linkedUserId);
-  res.json(availableApartments);
+apiRouter.get('/apartments/available', async (req, res) => {
+  try {
+    const availableApartments = await DB.getAvailableApartments();
+    res.json(availableApartments); 
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch apartments" });
+  }
 });
 
 // GetApartment for User
 apiRouter.get('/apartments/user/:userid', verifySpecificUserAuth("params", "userid"), (req, res) => {
   const { userid } = req.params
-  const userApartment = Object.values(apartments).find(
-    (apt) => apt.linkedUserId === userid)
+  const userApartment = DB.getApartmentForUser(userid)
   res.json(userApartment);
 });
 
 // GetApartments for Admin
-apiRouter.get('/apartments/all', verifyAdminAuth, (req, res) => {
-  res.json(apartments);
+apiRouter.get('/apartments/all', verifyAdminAuth, async (req, res) => {
+  try {
+    const allApartments = await DB.getApartmentsForAdmin()
+    res.json(allApartments);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch apartments" });
+  }
 });
 
 // updateApartment for User
@@ -146,15 +154,11 @@ apiRouter.patch('/apartments/id/:apartmentid', verifySpecificUserAuth("params", 
 });
 
 function updateApartment(id, updates) {
-  if (!apartments[id]) return null;
+  const apartment = DB.getApartment(id)
+  if (!apartment) return null
+  DB.updateApartment(apartment)
 
-  apartments[id] = {
-    ...apartments[id],
-    ...updates,
-    id: apartments[id].id // Prevent accidental overwriting of the primary ID
-  };
-
-  return apartments[id];
+  return apartment;
 }
 
 
