@@ -28,9 +28,9 @@ export function AdminDashboard({ onSendTechnician }) {
     let isMounted = true;
 
     if (selectedApartment?.linkedUserId) {
-      getAptTenant(selectedApartment.linkedUserId).then(email => {
-        if (isMounted) {
-          setTenantEmail(email);
+      getAptTenant(selectedApartment.linkedUserId).then(user => {
+        if (isMounted && user.email) {
+          setTenantEmail(user.email);
         }
       });
     }
@@ -38,7 +38,7 @@ export function AdminDashboard({ onSendTechnician }) {
     return () => {
       isMounted = false;
     };
-  }, [selectedApartment?.linkedUserId]);
+  }, [selectedApartment]);
 
   useEffect(() => {
     if (!user || user.role !== "Admin") {
@@ -88,7 +88,7 @@ export function AdminDashboard({ onSendTechnician }) {
         throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const account = await response.json();
-        return account ? account.email : 'Placeholder Tenant';
+        return account ? account : 'Placeholder Tenant';
     } catch (error) {
         return 'Placeholder Tenant';
     }
