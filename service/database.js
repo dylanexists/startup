@@ -65,6 +65,22 @@ async function updateApartment(apartment) {
     await apartmentCollection.updateOne({ id: apartment.id }, { $set: apartment })
 }
 
+async function getPayment(paymentid) {
+    return paymentCollection.findOne({ id: paymentid })
+}
+
+async function getPaymentsForApartment(apartmentid) {
+    return paymentCollection.find({ linkedApartmentId: apartmentid }).toArray()
+}
+
+async function getPaymentsForAdmin() {
+    return paymentCollection.find({}).toArray()
+}
+
+async function updatePayment(payment) {
+    await paymentCollection.updateOne({ id: payment.id }, { $set: payment })
+}
+
 module.exports = {
     getUser,
     getUserByEmail,
@@ -77,4 +93,8 @@ module.exports = {
     getApartmentForUser,
     getApartmentsForAdmin,
     updateApartment,
+    getPayment,
+    getPaymentsForApartment,
+    getPaymentsForAdmin,
+    updatePayment,
 }

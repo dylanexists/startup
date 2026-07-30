@@ -2,16 +2,11 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
-const { ACCOUNTS_GLOB, APARTMENTS_GLOB, PAYMENTS_GLOB } = require('./constants.js');
 const app = express();
 const DB = require('./database.js');
 
 const authCookieName = "token"
 const adminRole = "Admin"
-
-let users = ACCOUNTS_GLOB
-const apartments = APARTMENTS_GLOB
-let payments = PAYMENTS_GLOB
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -62,7 +57,7 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
         let targetUserId = paramValue
 
         if (paramKey === 'apartmentid') {
-            const apartment = DB.getApartment(paramValue)
+            const apartment = await DB.getApartment(paramValue)
             if (!apartment) {
                 return res.status(404).send({ msg: 'Apartment not found' });
             }
@@ -84,12 +79,12 @@ const verifySpecificUserAuth = (paramSource = "params", paramKey) => {
         }
 
         if (paramKey === 'paymentid') {
-            const payment = payments[paramValue];
+            const payment = await DB.getPayment(paramValue);
             if (!payment) {
                 return res.status(404).send({ msg: 'Payment not found' });
             }
             const targetAptId = payment.linkedApartmentId
-            const apartment = DB.getApartment(targetAptId)
+            const apartment = await DB.getApartment(targetAptId)
             if (!apartment) {
                 return res.status(404).send({ msg: 'Apartment from payment not found' });
             }
@@ -118,10 +113,19 @@ apiRouter.get('/apartments/available', async (req, res) => {
 });
 
 // GetApartment for User
-apiRouter.get('/apartments/user/:userid', verifySpecificUserAuth("params", "userid"), (req, res) => {
-  const { userid } = req.params
-  const userApartment = DB.getApartmentForUser(userid)
-  res.json(userApartment);
+apiRouter.get('/apartments/user/:userid', verifySpecificUserAuth("params", "userid"), async (req, res) => {
+  try {
+    const { userid } = req.params;
+    const userApartment = await DB.getApartmentForUser(userid);
+
+    if (!userApartment) {
+      return res.status(404).json({ message: 'Apartment not found for this user' });
+    }
+
+    return res.json(userApartment);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 // GetApartments for Admin
@@ -135,12 +139,13 @@ apiRouter.get('/apartments/all', verifyAdminAuth, async (req, res) => {
 });
 
 // updateApartment for User
-apiRouter.patch('/apartments/id/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), (req, res) => {
+apiRouter.patch('/apartments/id/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), async (req, res) => {
   try {
     const { apartmentid } = req.params;
     const updates = req.body;
 
-    const updatedApartment = updateApartment(apartmentid, updates);
+    const updatedApartment = await updateApartment(apartmentid, updates);
+    
 
     if (!updatedApartment) {
       return res.status(404).json({ error: `Apartment ${apartmentid} not found` });
@@ -152,37 +157,47 @@ apiRouter.patch('/apartments/id/:apartmentid', verifySpecificUserAuth("params", 
   }
 });
 
-function updateApartment(id, updates) {
-  const apartment = DB.getApartment(id)
+async function updateApartment(id, updates) {
+  const apartment = await DB.getApartment(id)
   if (!apartment) return null
-  DB.updateApartment(apartment)
+  const updatedApartment = { ...apartment, ...updates }
+  await DB.updateApartment(updatedApartment)
 
-  return apartment;
+  return updatedApartment;
 }
 
 
 //--------- Payment Services ---------//
 
 // GetPayments for Admin
-apiRouter.get('/payments/all', verifyAdminAuth, (req, res) => {
-  res.send(payments);
+apiRouter.get('/payments/all', verifyAdminAuth, async (req, res) => {
+  try {
+    const allPayments = await DB.getPaymentsForAdmin()
+    res.json(allPayments);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch payments" });
+  }
 });
 
 // GetPayments for User
-apiRouter.get('/payments/id/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), (req, res) => {
-  const { apartmentid } = req.params
-  const userPayments = Object.values(payments).filter(
-    (apt) => apt.linkedApartmentId === apartmentid)
-  res.status(200).json(userPayments);
+apiRouter.get('/payments/id/:apartmentid', verifySpecificUserAuth("params", "apartmentid"), async (req, res) => {
+  try {
+    const { apartmentid } = req.params;
+    const payments = await DB.getPaymentsForApartment(apartmentid); 
+    return res.json(payments);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 // updatePayment for User
-apiRouter.patch('/payments/id/:paymentid', verifySpecificUserAuth("params", "paymentid"), (req, res) => {
+apiRouter.patch('/payments/id/:paymentid', verifySpecificUserAuth("params", "paymentid"), async (req, res) => {
   try {
     const { paymentid } = req.params;
     const updates = req.body;
 
-    const updatedPayment = updatePayment(paymentid, updates);
+    const updatedPayment = await updatePayment(paymentid, updates);
 
     if (!updatedPayment) {
       return res.status(404).json({ error: `Payment ${paymentid} not found` });
@@ -194,16 +209,13 @@ apiRouter.patch('/payments/id/:paymentid', verifySpecificUserAuth("params", "pay
   }
 });
 
-function updatePayment(id, updates) {
-  if (!payments[id]) return null;
+async function updatePayment(id, updates) {
+  const payment = await DB.getPayment(id)
+  if (!payment) return null
+  const updatedPayment = { ...payment, ...updates }
+  await DB.updatePayment(updatedPayment)
 
-  payments[id] = {
-    ...payments[id],
-    ...updates,
-    id: payments[id].id // Prevent accidental overwriting of the primary ID
-  };
-
-  return payments[id];
+  return updatedPayment;
 }
 
 //--------- Account Services ---------//
@@ -256,10 +268,19 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 });
 
 // GetUser for Admin
-apiRouter.get('/auth/id/:userid', verifyAdminAuth, (req, res) => {
-  const { userid } = req.params
-  const user = DB.getUser(userid)
-  return res.status(200).json(user);
+apiRouter.get('/auth/id/:userid', verifyAdminAuth, async (req, res) => {
+  try {
+    const { userid } = req.params;
+    const user = await DB.getUser(userid);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 async function createUser(email, password) {
@@ -281,13 +302,19 @@ async function createUser(email, password) {
 async function findUserByEmail(email) {
   if (!email) return null
 
-  return DB.getUserByEmail(email)
+  try {
+    const user = await DB.getUserByEmail(email)
+    return user; 
+  } catch (err) {
+    console.error("Error fetching user by email:", err);
+    return null;
+  }
 }
 
 async function findUserByToken(token) {
   if (!token) return null
 
-  return DB.getUserByToken(token)
+  return await DB.getUserByToken(token)
 }
 
 // setAuthCookie in the HTTP response
