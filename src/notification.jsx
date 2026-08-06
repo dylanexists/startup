@@ -42,8 +42,7 @@ export function Notification() {
             <div className="flex justify-between items-center w-full">
                 <h3 className="font-bold">Notification</h3>
             </div>
-            <h4>Placeholder</h4>
-            <p>la la la la la la la laaa</p>
+            <p>{event.value}</p>
         </div>
         <div className="w-full bg-gray-200 h-1">
             <div key={animationKey} className="progress-bar" />

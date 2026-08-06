@@ -170,8 +170,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [x] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [x] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [x] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [x] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [x] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - The backend is a greater listener!
+- [x] **Frontend makes WebSocket connection** - The frontend makes connections stored by userid
+- [x] **Data sent over WebSocket connection** - Data regarding apartment state gets sent!
+- [x] **WebSocket data displayed** - Data displayed through notification!
+- [x] **Application is fully functional** - The app works great. 100%
