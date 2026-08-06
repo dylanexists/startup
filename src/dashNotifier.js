@@ -1,12 +1,14 @@
 const DashEvent = {
+  ToOrFromAdmin: 'admin',
   System: 'system',
   Auth: 'auth',
   UserNoti: 'user_notification'
 };
 
 class EventMessage {
-  constructor(from, type, value) {
+  constructor(from, recipientId, type, value) {
     this.from = from;
+    this.recipientId = recipientId;
     this.type = type;
     this.value = value;
   }
@@ -21,22 +23,40 @@ class DashEventNotifier {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
     this.socket.onopen = (event) => {
-      this.receiveEvent(new EventMessage('RentItBest', DashEvent.System, { msg: 'connected' }));
+      this.receiveEvent(new EventMessage('RentItBest', null, DashEvent.System, 'connected'));
     };
     this.socket.onclose = (event) => {
-      this.receiveEvent(new EventMessage('RentItBest', DashEvent.System, { msg: 'disconnected' }));
+      this.receiveEvent(new EventMessage('RentItBest', null, DashEvent.System, 'disconnected'));
     };
     this.socket.onmessage = async (msg) => {
       try {
-        const event = JSON.parse(await msg.data.text());
+        const event = JSON.parse(await msg.data);
         this.receiveEvent(event);
-      } catch {}
+      } catch { console.log("WEEWOO")}
     };
   }
 
-  broadcastEvent(from, type, value) {
-    const event = new EventMessage(from, type, value);
-    this.socket.send(JSON.stringify(event));
+  authenticate(userId) {
+    if (this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify({ type: DashEvent.Auth, userId }));
+    } else {
+      this.socket.addEventListener('open', () => {
+        this.socket.send(JSON.stringify({ type: DashEvent.Auth, userId }));
+      }, { once: true });
+    }
+  }
+
+  sendNotification(from, recipientId, type, value) {
+    if (this.socket.readyState === WebSocket.OPEN) {
+        const event = new EventMessage(
+            from,
+            recipientId,
+            type,
+            value
+        )
+        console.log("Notification Sent!")
+        this.socket.send(JSON.stringify(event))
+    }
   }
 
   addHandler(handler) {
@@ -44,16 +64,14 @@ class DashEventNotifier {
   }
 
   removeHandler(handler) {
-    this.handlers.filter((h) => h !== handler);
+    this.handlers = this.handlers.filter((h) => h !== handler);
   }
 
   receiveEvent(event) {
     this.events.push(event);
 
-    this.events.forEach((e) => {
-      this.handlers.forEach((handler) => {
-        handler(e);
-      });
+    this.handlers.forEach((handler) => {
+        handler(event);
     });
   }
 }

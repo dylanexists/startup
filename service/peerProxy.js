@@ -22,11 +22,6 @@ function peerProxy(httpServer) {
             }
             socket.userId = data.value
             connections.set(data.value, socket)
-            console.log("auth good!")
-            console.log(data.value)
-            console.log(socket.userId)
-            console.log("Finally:")
-            console.log(connections.get(data.value))
         }
 
         if (data.type === 'system') {
@@ -39,10 +34,13 @@ function peerProxy(httpServer) {
 
         if (data.type === 'user_notification') {
             const recipientId = data.recipientId
-
+            console.log(recipientId)
             if (recipientId) {
                 const recipientClient = connections.get(recipientId)
+                console.log("Gonna do it")
                 if (recipientClient && recipientClient.readyState === WebSocket.OPEN) {
+                    console.log("Did it?")
+                    console.log(JSON.stringify(data))
                     recipientClient.send(JSON.stringify(data))
                 }
             }

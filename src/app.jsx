@@ -8,6 +8,7 @@ import { RegisterUser } from './register-user/register-user';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { UserDashboard } from './user-dashboard/user-dashboard';
 import ScrollToTop from './ScrollToTop';
+import { DashEvent, DashNotifier } from './dashNotifier';
 
 export default function App() {
     return (
@@ -85,10 +86,21 @@ function AppContent() {
         body: JSON.stringify({technicianSent: true}),
         });
 
-        const data = await response.json()
+        const apt = await response.json()
 
         if (!response.ok) {
             throw new Error(data.error || `Request failed with status ${response.status}`);
+        }
+        const linkedUserId = apt.linkedUserId
+        const message = "Your landlord just ordered that a technician be sent!"
+        console.log(linkedUserId)
+        if (linkedUserId) {
+            DashNotifier.sendNotification(
+                DashEvent.ToOrFromAdmin, 
+                linkedUserId, 
+                DashEvent.UserNoti, 
+                message
+            )
         }
     } catch (error) {
         return null
@@ -106,6 +118,12 @@ function AppContent() {
                 localStorage.setItem('userApartment', JSON.stringify(userApartment))
                 const userPayments = await getUserPaymentsFromApt(userApartment.id)
                 localStorage.setItem('userPayments', JSON.stringify(userPayments))
+                DashNotifier.sendNotification(
+                    user.email,
+                    DashEvent.ToOrFromAdmin,
+                    DashEvent.Auth,
+                    user.id
+                )
                 navigate('/user-dashboard')
             } else {
                 return

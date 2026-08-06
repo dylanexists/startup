@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Notification } from '../notification';
 
 const getMonthName = (monthNumber) => {
   const months = [
@@ -77,7 +78,8 @@ export function UserDashboard( { onPaymentUpdate, onRequestMaintenance } ) {
 
   return (
     <main className="flex flex-col items-center pt-16 min-h-[calc(100vh-8.25rem)]">
-            <h1 className="text-5xl font-bold tracking-tight text-gray-900 mb-24">User Dashboard</h1>
+        <h1 className="text-5xl font-bold tracking-tight text-gray-900 mb-24">User Dashboard</h1>
+        <Notification />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
                 <section className="p-6 bg-white border w-full border-gray-300 rounded-lg shadow-sm space-y-6 m-4">
                     <h3>Payment History</h3>
