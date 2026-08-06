@@ -10,9 +10,8 @@ function peerProxy(httpServer) {
 
   socketServer.on('connection', (socket) => {
     socket.isAlive = true;
-    console.log("eyyyy")
 
-    // Forward messages to everyone except the sender
+    // Handle messages depending on their type
     socket.on('message', function message(rawData) {
       try {
         const data = JSON.parse(rawData)
@@ -21,8 +20,13 @@ function peerProxy(httpServer) {
             if (socket.userId && connections.get(socket.userId) === socket) {
                 connections.delete(socket.userId); //get rid of previous authentication of same socket, if exists
             }
-            socket.userId = data.userId
-            connections.set(data.userId, socket)
+            socket.userId = data.value
+            connections.set(data.value, socket)
+            console.log("auth good!")
+            console.log(data.value)
+            console.log(socket.userId)
+            console.log("Finally:")
+            console.log(connections.get(data.value))
         }
 
         if (data.type === 'system') {
