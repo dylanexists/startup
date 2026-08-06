@@ -121,3 +121,18 @@ a, .nav-button {
 .cursor-pointer {
   cursor: pointer;
 }
+
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.progress-bar {
+  height: 4px;
+  background-color: #3b82f6; 
+  animation: shrink 10s linear forwards;
+}
